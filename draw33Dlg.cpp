@@ -78,6 +78,8 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &Cdraw33Dlg::OnNMCustomdrawSlider1)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER3, &Cdraw33Dlg::OnNMCustomdrawSlider3)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER2, &Cdraw33Dlg::OnNMCustomdrawSlider2)
 END_MESSAGE_MAP()
 
 
@@ -251,6 +253,46 @@ bool Cdraw33Dlg::isin()
 void Cdraw33Dlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	UpdateData(true);
 	// TODO: Add your control notification handler code here
+	CClientDC dc(this);
+	 CBrush b;
+	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+	 dc.SelectObject(&b);
+	 dc.Rectangle(5,340,55,390);
+	 UpdateData(false);
+	*pResult = 0;
+}
+
+
+void Cdraw33Dlg::OnNMCustomdrawSlider3(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+
+	UpdateData(true);
+	// TODO: Add your control notification handler code here
+	CClientDC dc(this);
+	 CBrush b;
+	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+	 dc.SelectObject(&b);
+	 dc.Rectangle(5,340,55,390);
+	 UpdateData(false);
+	*pResult = 0;
+}
+
+
+void Cdraw33Dlg::OnNMCustomdrawSlider2(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	
+	UpdateData(true);
+	// TODO: Add your control notification handler code here
+	CClientDC dc(this);
+	 CBrush b;
+	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+	 dc.SelectObject(&b);
+	 dc.Rectangle(5,340,55,390);
+	 UpdateData(false);
+
 	*pResult = 0;
 }
