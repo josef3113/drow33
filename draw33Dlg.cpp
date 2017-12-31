@@ -63,11 +63,11 @@ void Cdraw33Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Slider(pDX, IDC_SLIDER1, m_red);
-	DDV_MinMaxInt(pDX, m_red, 1, 100);
+	DDV_MinMaxInt(pDX, m_red, 0, 100);
 	DDX_Slider(pDX, IDC_SLIDER2, m_green);
-	DDV_MinMaxInt(pDX, m_green, 1, 100);
+	DDV_MinMaxInt(pDX, m_green, 0, 100);
 	DDX_Slider(pDX, IDC_SLIDER3, m_blue);
-	DDV_MinMaxInt(pDX, m_blue, 1, 100);
+	DDV_MinMaxInt(pDX, m_blue, 0, 100);
 }
 
 BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
@@ -77,6 +77,7 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &Cdraw33Dlg::OnNMCustomdrawSlider1)
 END_MESSAGE_MAP()
 
 
@@ -135,27 +136,11 @@ void Cdraw33Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void Cdraw33Dlg::OnPaint()
 {
-	if (IsIconic())
-	{
 		CPaintDC dc(this); // device context for painting
 
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
-
-		// Center icon in client rectangle
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
-
-		// Draw the icon
-		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
-		CDialogEx::OnPaint();
-	}
+		
+		dc.Rectangle(5,5,555,320);
+		
 }
 
 // The system calls this function to obtain the cursor to display while the user drags
@@ -173,6 +158,7 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 		  Ispress=true;
 		  start=point;
 		  end=point;
+		 
 	CDialogEx::OnLButtonDown(nFlags, point);
 }
 
@@ -210,9 +196,24 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	UpdateData(true);
 	// TODO: Add your message handler code here and/or call default
-	Ispress=false;
+     CClientDC dc(this);
 	end=point;
-	 CClientDC dc(this);
+	Ispress=false;
+	if(!isin())
+	{
+		CPen myPen1(PS_SOLID, 5, RGB(25,63,90));
+		CPen *oldPen;
+		oldPen=dc.SelectObject( &myPen1 );
+		dc.SetROP2(R2_NOTXORPEN);  
+		dc. MoveTo(start);
+		dc.LineTo(start.x,end.y);
+		dc.LineTo(end.x,end.y);
+		dc.LineTo(end.x,start.y);
+		dc.LineTo(start.x,start.y);
+		end=start;
+	}
+	
+	
 	 CBrush b;
 	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 	 dc.SelectObject(&b);
@@ -235,4 +236,21 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	CDialogEx::OnLButtonUp(nFlags, point);
 	UpdateData(false);
+}
+
+bool Cdraw33Dlg::isin()
+{
+	if(start.x<5||start.x> 555||end.x<5||end.x> 555
+		||	start.y<5||start.y> 320||end.y<5||end.y> 320)
+		return false;
+	else 
+		return true;
+
+}
+
+void Cdraw33Dlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
 }

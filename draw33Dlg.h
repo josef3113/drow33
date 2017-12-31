@@ -17,6 +17,7 @@ class Cdraw33Dlg : public CDialogEx
 public:
 	Cdraw33Dlg(CWnd* pParent = NULL);	// standard constructor
 
+
 // Dialog Data
 	enum { IDD = IDD_DRAW33_DIALOG };
 
@@ -41,4 +42,6 @@ public:
 	int m_red;
 	int m_green;
 	int m_blue;
+	afx_msg void OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult);
+	bool isin();
 };
