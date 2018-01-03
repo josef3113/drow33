@@ -12,6 +12,7 @@ class Cdraw33Dlg : public CDialogEx
 {
 // Construction
 	CArray <Figure *> figs;
+	int revers;
 	int indexarr;
 	//my variable
 	bool Ispress;
@@ -19,7 +20,7 @@ class Cdraw33Dlg : public CDialogEx
 	CPoint end;
 public:
 	Cdraw33Dlg(CWnd* pParent = NULL);	// standard constructor
-
+	 ~Cdraw33Dlg();
 
 // Dialog Data
 	enum { IDD = IDD_DRAW33_DIALOG };
