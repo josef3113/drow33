@@ -141,11 +141,18 @@ void Cdraw33Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 void Cdraw33Dlg::OnPaint()
 {
 		CPaintDC dc(this); // device context for painting
-
+		 CBrush b;
 		
 		dc.Rectangle(5,5,555,320);
 		for(int i=0;i<indexarr;i++)
 		{
+			/*int R =	 figs[i]->R;
+			int G =	 figs[i]->G;
+			int B =	 figs[i]->B;
+
+			b.CreateSolidBrush(RGB(2.5*R,2.5*G,2.5*B));
+	        dc.SelectObject(&b);
+		*/
 			figs[i]->Draw(&dc);
 		}
 		
@@ -229,14 +236,14 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 	 if(nFlags==MK_CONTROL)
 	 {
 	    dc.Rectangle(start.x,start.y,end.x,end.y);
-		figs.Add(new RectangleM(start.x,start.y,end.x,end.y));
+		figs.Add(new RectangleM(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
 		indexarr++;
 
 	 }
 	 else
 	 {
 		 dc.Ellipse(start.x,start.y,end.x,end.y);
-		 figs.Add(new EllipseM(start.x,start.y,end.x,end.y));
+		 figs.Add(new EllipseM(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
 		indexarr++;
 	 }
 	
