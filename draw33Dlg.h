@@ -3,13 +3,16 @@
 //
 
 #pragma once
+#include "Figure.h"
 
+#include <afxtempl.h>  
 
 // Cdraw33Dlg dialog
 class Cdraw33Dlg : public CDialogEx
 {
 // Construction
-
+	CArray <Figure *> figs;
+	int indexarr;
 	//my variable
 	bool Ispress;
 	CPoint start;
@@ -46,4 +49,5 @@ public:
 	bool isin();
 	afx_msg void OnNMCustomdrawSlider3(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMCustomdrawSlider2(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButton1();
 };

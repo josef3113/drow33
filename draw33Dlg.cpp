@@ -54,6 +54,7 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	, m_green(0)
 	, m_blue(0)
 {
+	indexarr=0;
 	Ispress=false;
 
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -80,6 +81,7 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &Cdraw33Dlg::OnNMCustomdrawSlider1)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER3, &Cdraw33Dlg::OnNMCustomdrawSlider3)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER2, &Cdraw33Dlg::OnNMCustomdrawSlider2)
+	ON_BN_CLICKED(IDC_BUTTON1, &Cdraw33Dlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -142,6 +144,10 @@ void Cdraw33Dlg::OnPaint()
 
 		
 		dc.Rectangle(5,5,555,320);
+		for(int i=0;i<indexarr;i++)
+		{
+			figs[i]->Draw(&dc);
+		}
 		
 }
 
@@ -221,10 +227,18 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 	 dc.SelectObject(&b);
 	//dc->Rectangle(x1,y1,x2,y2);
 	 if(nFlags==MK_CONTROL)
-	 dc.Rectangle(start.x,start.y,end.x,end.y);
-	 else
-		 dc.Ellipse(start.x,start.y,end.x,end.y);
+	 {
+	    dc.Rectangle(start.x,start.y,end.x,end.y);
+		figs.Add(new RectangleM(start.x,start.y,end.x,end.y));
+		indexarr++;
 
+	 }
+	 else
+	 {
+		 dc.Ellipse(start.x,start.y,end.x,end.y);
+		 figs.Add(new EllipseM(start.x,start.y,end.x,end.y));
+		indexarr++;
+	 }
 	
 		CPen myPen1(PS_SOLID, 5, RGB(25,63,90));
 		CPen *oldPen;
@@ -295,4 +309,12 @@ void Cdraw33Dlg::OnNMCustomdrawSlider2(NMHDR *pNMHDR, LRESULT *pResult)
 	 UpdateData(false);
 
 	*pResult = 0;
+}
+
+
+void Cdraw33Dlg::OnBnClickedButton1()
+{
+	// TODO: Add your control notification handler code here
+	indexarr--;
+	Invalidate();
 }
