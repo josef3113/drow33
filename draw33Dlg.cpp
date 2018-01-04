@@ -93,6 +93,7 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER3, &Cdraw33Dlg::OnNMCustomdrawSlider3)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER2, &Cdraw33Dlg::OnNMCustomdrawSlider2)
 	ON_BN_CLICKED(IDC_BUTTON1, &Cdraw33Dlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &Cdraw33Dlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -351,4 +352,16 @@ void Cdraw33Dlg::OnBnClickedButton1()
 	Invalidate();
 	}
 	
+}
+
+
+void Cdraw33Dlg::OnBnClickedButton2()
+{
+	if(revers>0)
+	{
+		revers--;
+		Invalidate();
+
+	}
+	// TODO: Add your control notification handler code here
 }
