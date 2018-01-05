@@ -203,6 +203,7 @@ HCURSOR Cdraw33Dlg::OnQueryDragIcon()
 void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
+	UpdateData(true);
 		  Ispress=true;
 		  start=point;
 		  end=point;
@@ -212,15 +213,17 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 				{
 					if(figs[i]->isinshap(point.x,point.y))
 					{
-						figs[i]->R=m_red;
+						/*figs[i]->R=m_red;
 						figs[i]->G=m_green;
 						figs[i]->B=m_blue;
 					
-						Invalidate();
+						Invalidate();*/
+						temp=figs[i];
 					}
 				
 				}
 		  }
+		  UpdateData(false);
 		 
 	CDialogEx::OnLButtonDown(nFlags, point);
 }
@@ -232,6 +235,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: Add your message handler code here and/or call default
 
 	//my code 
+	UpdateData(true);
 	 if(Ispress && ! ToMove)
 	 {
 		CClientDC dc(this);
@@ -254,8 +258,15 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		dc.SelectObject( oldPen );
 	 }
 
+	 if(temp!=NULL && Ispress && ToMove)
+	 {
+		 temp->R=m_red;
+		 temp->G=m_green;
+		 temp->B=m_blue;
+		 Invalidate();
+	 }
 	 
-
+	 UpdateData(false);
 	 //
 	CDialogEx::OnMouseMove(nFlags, point);
 }

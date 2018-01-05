@@ -13,8 +13,8 @@ class MYEllipse :public Shape
 {
 private:
 	
-	CPoint A;
-	CPoint C ;
+	//CPoint A;
+	//CPoint C ;
 	//int R,G,B;
 
 public:

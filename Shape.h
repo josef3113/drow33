@@ -10,6 +10,8 @@ class Shape
 {
 public:
 	 int R,G,B;
+	 CPoint A;
+	 CPoint C;
 	Shape(){}
 	
 	virtual double getArea()const=0;
