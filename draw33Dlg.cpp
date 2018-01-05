@@ -56,20 +56,25 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	, m_green(0)
 	, m_blue(0)
 {
+	// my code
 	revers=0;
 	indexarr=0;
 	Ispress=false;
+
+	//
 
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 Cdraw33Dlg::~Cdraw33Dlg()
 {
-	
+	//my code
 	for(int i=0;i<figs.GetSize();i++)
 	{
 		delete figs[figs.GetSize()-1-i];
 	}
+
+	//
 }
 
 
@@ -155,14 +160,19 @@ void Cdraw33Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void Cdraw33Dlg::OnPaint()
 {
+	// my code 
 	UpdateData(true);
-		CPaintDC dc(this); // device context for painting
+		CPaintDC dc(this); 
 		
 		 // b.CreateSolidBrush(RGB(2.5*R,2.5*G,2.5*B));
-		dc.Rectangle(5,5,995,395);
-		if(figs.GetCount()>0)
+
+
+		dc.Rectangle(5,5,995,395);		 //to to client surface
+
+
+		if(figs.GetSize()>0)
 		{
-			for(int i=0;i<figs.GetCount()-revers;i++)
+			for(int i=0;i<figs.GetSize()-revers;i++)
 			{
 				CBrush b;
 				b.CreateSolidBrush(RGB(2.5*figs[i]->R,2.5*figs[i]->G,2.5*figs[i]->B));
@@ -173,6 +183,8 @@ void Cdraw33Dlg::OnPaint()
 		}
 
 		UpdateData(false);
+
+		//
 		
 }
 
@@ -200,10 +212,12 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
+
+	//my code 
 	 if(Ispress)
 	 {
-		 CClientDC dc(this);
-		CPen myPen1(PS_SOLID, 5, RGB(25,63,90));
+		CClientDC dc(this);
+		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		CPen *oldPen;
 		oldPen=dc.SelectObject( &myPen1 ); 
 		dc.SetROP2(R2_NOTXORPEN);  
@@ -221,20 +235,23 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 		dc.SelectObject( oldPen );
 	 }
+
+	 //
 	CDialogEx::OnMouseMove(nFlags, point);
 }
 
 
 void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	UpdateData(true);
 	// TODO: Add your message handler code here and/or call default
+	UpdateData(true);
+	
      CClientDC dc(this);
 	end=point;
 	Ispress=false;
 	if(!isin())
 	{
-		CPen myPen1(PS_SOLID, 5, RGB(25,63,90));
+		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		CPen *oldPen;
 		oldPen=dc.SelectObject( &myPen1 );
 		dc.SetROP2(R2_NOTXORPEN);  
@@ -244,6 +261,8 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		dc.LineTo(end.x,start.y);
 		dc.LineTo(start.x,start.y);
 		end=start;
+		dc.SelectObject(oldPen);
+
 	}
 	
 	else
@@ -282,7 +301,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			//indexarr++;
 		 }
 	
-			CPen myPen1(PS_SOLID, 5, RGB(25,63,90));
+			CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 			CPen *oldPen;
 			oldPen=dc.SelectObject( &myPen1 );
 			dc.SetROP2(R2_NOTXORPEN);  
@@ -291,12 +310,16 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			dc.LineTo(end.x,end.y);
 			dc.LineTo(end.x,start.y);
 			dc.LineTo(start.x,start.y);
+			dc.SelectObject(oldPen);
 	}
 
-	CDialogEx::OnLButtonUp(nFlags, point);
+	
 	UpdateData(false);
-}
+	//
 
+	CDialogEx::OnLButtonUp(nFlags, point);
+}
+// mycode
 bool Cdraw33Dlg::isin()
 {
 	if(start.x<5||start.x> 995||end.x<5||end.x> 995
@@ -308,18 +331,24 @@ bool Cdraw33Dlg::isin()
 	
 
 }
+//
 
 void Cdraw33Dlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
-	UpdateData(true);
+	
 	// TODO: Add your control notification handler code here
+	//my code
+	UpdateData(true);
 	CClientDC dc(this);
 	 CBrush b;
+	 CBrush * oldB;
 	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
-	 dc.SelectObject(&b);
+	 oldB=dc.SelectObject(&b);
 	 dc.Rectangle(5,400,55,450);
+	 dc.SelectObject(oldB);
 	 UpdateData(false);
+	 //
 	*pResult = 0;
 }
 
@@ -328,14 +357,19 @@ void Cdraw33Dlg::OnNMCustomdrawSlider3(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
 
-	UpdateData(true);
+	
 	// TODO: Add your control notification handler code here
+	//my code
+	UpdateData(true);
 	CClientDC dc(this);
 	 CBrush b;
+	 CBrush * oldB;
 	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
-	 dc.SelectObject(&b);
+	 oldB=dc.SelectObject(&b);
 	 dc.Rectangle(5,400,55,450);
+	 dc.SelectObject(oldB);
 	 UpdateData(false);
+	 //
 	*pResult = 0;
 }
 
@@ -344,15 +378,19 @@ void Cdraw33Dlg::OnNMCustomdrawSlider2(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
 	
-	UpdateData(true);
+	
 	// TODO: Add your control notification handler code here
+	//my code
+	UpdateData(true);
 	CClientDC dc(this);
 	 CBrush b;
+	 CBrush * oldB;
 	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
-	 dc.SelectObject(&b);
+	 oldB=dc.SelectObject(&b);
 	 dc.Rectangle(5,400,55,450);
+	 dc.SelectObject(oldB);
 	 UpdateData(false);
-
+	 //
 	*pResult = 0;
 }
 
@@ -360,22 +398,27 @@ void Cdraw33Dlg::OnNMCustomdrawSlider2(NMHDR *pNMHDR, LRESULT *pResult)
 void Cdraw33Dlg::OnBnClickedButton1()
 {
 	// TODO: Add your control notification handler code here
+	//my code
 	if(revers<figs.GetCount())
 	{
 		revers++;
 	Invalidate();
 	}
+	//
 	
 }
 
 
 void Cdraw33Dlg::OnBnClickedButton2()
 {
+	// TODO: Add your control notification handler code here
+	// my code
 	if(revers>0)
 	{
 		revers--;
 		Invalidate();
 
 	}
-	// TODO: Add your control notification handler code here
+	//
+	
 }

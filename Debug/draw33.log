@@ -1,4 +1,4 @@
-﻿Build started 1/5/2018 10:53:33 AM.
+﻿Build started 1/5/2018 11:25:59 AM.
      1>Project "C:\Users\josef\Documents\Visual Studio 2010\Projects\gg\draw33\draw33\draw33.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\draw33.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.19
+Time Elapsed 00:00:01.25
