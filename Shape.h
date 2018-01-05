@@ -3,7 +3,6 @@
 #include "stdafx.h"
 
 #include <iostream>
-//#include "square.h"
 using namespace std;
 
 class Shape
@@ -14,11 +13,8 @@ public:
 	 CPoint C;
 	Shape(){}
 	
-	virtual double getArea()const=0;
-	virtual double getPerimeter()const=0;
 	virtual bool isinshap(int x,int y)=0;
-
-	virtual void Draw(CDC *dc)=0;
+    virtual void Draw(CDC *dc)=0;
 
 	virtual ~Shape(){}
 };

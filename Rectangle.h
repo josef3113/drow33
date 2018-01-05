@@ -11,39 +11,15 @@ public:
 
 
 	MYRectangle( CPoint=(0,0) , CPoint=(0,0),int R=0,int G=0,int B=0 ); //defult constractor
-	MYRectangle(const MYRectangle&);            //copy constractor
 	~MYRectangle();
 
-
-	//----setres
-
-	void setA(const CPoint&);
-    void setC(const CPoint&);
-
-	//-----getrs  inheritance from polygon
-
-
-	//-----its considered attribute
-
-	int getLenght()const;
-	int getWidth()const;
-
-	//------operators
-	void operator=(const MYRectangle &);
-
+	
 	//----function of Rectangle
 
 	void Draw(CDC *dc);
-	bool isinshap(int x,int y)
-	{
-		if( (x > this->A.x) && (x < this->C.x) && (y > this->A.y) && (y < this->C.y) )
-			return true;
-		else
-			return false;
-	}
+	bool isinshap(int x,int y) ;
+	
      
-	double getArea()const;
-	double getPerimeter()const;
 
 };
 

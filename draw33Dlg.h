@@ -4,6 +4,7 @@
 
 #pragma once
 #include"Shape.h"
+#include "Line.h"
 //#include "Figure.h"
 
 #include <afxtempl.h>  
@@ -13,7 +14,9 @@ class Cdraw33Dlg : public CDialogEx
 {
 // Construction
 	CArray <Shape* > figs;
+	CArray <MYLine> lines;
 	int revers;
+	int reversLine;
 	int indexarr;
 	//my variable
 	bool Ispress;
@@ -21,6 +24,7 @@ class Cdraw33Dlg : public CDialogEx
 	CPoint end;
 	CPoint dist;
 	bool ToMove;
+	bool Line;
 	Shape * temp;
 public:
 	Cdraw33Dlg(CWnd* pParent = NULL);	// standard constructor
@@ -57,4 +61,11 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedMfcbutton1();
+	afx_msg void OnBnClickedButton3();
+	int m_sizepen;
+	afx_msg void OnBnClickedMfcbutton2();
+	afx_msg void OnBnClickedMfcbutton3();
+	afx_msg void OnNMCustomdrawSlider4(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedMfcbutton4();
+	afx_msg void OnBnClickedMfcbutton5();
 };

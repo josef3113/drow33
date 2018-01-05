@@ -102,6 +102,7 @@
     <ClInclude Include="draw33.h" />
     <ClInclude Include="draw33Dlg.h" />
     <ClInclude Include="Ellipse.h" />
+    <ClInclude Include="Line.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Resource.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="draw33.cpp" />
     <ClCompile Include="draw33Dlg.cpp" />
     <ClCompile Include="Ellipse.cpp" />
+    <ClCompile Include="MLine.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

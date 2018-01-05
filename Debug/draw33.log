@@ -1,12 +1,13 @@
-﻿Build started 1/5/2018 4:50:32 PM.
+﻿Build started 1/5/2018 9:46:44 PM.
      1>Project "C:\Users\josef\Documents\Visual Studio 2010\Projects\gg\draw33\draw33\draw33.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\draw33.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _MBCS /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\draw33.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt draw33Dlg.cpp
+         draw33Dlg.cpp
        ResourceCompile:
-         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D _AFXDLL /l"0x0409" /IDebug\ /nologo /fo"Debug\draw33.res" draw33.rc 
+         All outputs are up-to-date.
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -15,6 +16,7 @@
          Debug\draw33.obj
          Debug\draw33Dlg.obj
          Debug\Ellipse.obj
+         Debug\MLine.obj
          Debug\Rectangle.obj
          Debug\stdafx.obj
        Manifest:
@@ -30,4 +32,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.64
+Time Elapsed 00:00:01.47

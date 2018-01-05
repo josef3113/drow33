@@ -6,48 +6,20 @@
 
 
 
-# define  PHI 3.1415               //to calculate area and perimeter of circle
-
-
 class MYEllipse :public Shape
 {
-private:
-	
-	//CPoint A;
-	//CPoint C ;
-	//int R,G,B;
+
 
 public:
 	
 
 	MYEllipse(CPoint=(0,0) , CPoint=(0,0),int R=0,int G=0,int B=0 );  //difult constractor
-	//MYEllipse(const MYEllipse&);               //copy constractor
 	~MYEllipse();
 
-	//---setres
-	//Ellipse& setCenter(const Point&);
-	//Ellipse& setRadius(const int &);
-
-	//---geters
-
-	////Point getCenter()const;
-	///int getRadius()const;
-
-	//-------operators
-	//MYEllipse& operator =(const MYEllipse&);
-
 	void Draw(CDC *dc);
-	bool isinshap(int x,int y)
-	{
-		if( (x > this->A.x) && (x < this->C.x) && (y > this->A.y) && (y < this->C.y) )
-			return true;
-		else
-			return false;
-	}
+	bool isinshap(int x,int y);
+	
 
-	//----function of Ellipse
-	double getArea()const;
-	double getPerimeter()const;
 
 };
 

@@ -55,12 +55,15 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	, m_red(0)
 	, m_green(0)
 	, m_blue(0)
+	, m_sizepen(0)
 {
 	// my code
 	revers=0;
 	indexarr=0;
+	reversLine=0;
 	Ispress=false;
 	ToMove=false;
+	Line=false;
 	temp=NULL;
 
 	//
@@ -73,7 +76,8 @@ Cdraw33Dlg::~Cdraw33Dlg()
 	//my code
 	for(int i=0;i<figs.GetSize();i++)
 	{
-		delete figs[figs.GetSize()-1-i];
+		delete figs[figs.GetSize()-1];
+		figs.RemoveAt(figs.GetSize()-1);
 	}
 
 
@@ -92,6 +96,8 @@ void Cdraw33Dlg::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_green, 0, 100);
 	DDX_Slider(pDX, IDC_SLIDER3, m_blue);
 	DDV_MinMaxInt(pDX, m_blue, 0, 100);
+	DDX_Slider(pDX, IDC_SLIDER4, m_sizepen);
+	DDV_MinMaxInt(pDX, m_sizepen, 0, 100);
 }
 
 BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
@@ -107,6 +113,12 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &Cdraw33Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &Cdraw33Dlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_MFCBUTTON1, &Cdraw33Dlg::OnBnClickedMfcbutton1)
+	ON_BN_CLICKED(IDC_BUTTON3, &Cdraw33Dlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_MFCBUTTON2, &Cdraw33Dlg::OnBnClickedMfcbutton2)
+	ON_BN_CLICKED(IDC_MFCBUTTON3, &Cdraw33Dlg::OnBnClickedMfcbutton3)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER4, &Cdraw33Dlg::OnNMCustomdrawSlider4)
+	ON_BN_CLICKED(IDC_MFCBUTTON4, &Cdraw33Dlg::OnBnClickedMfcbutton4)
+	ON_BN_CLICKED(IDC_MFCBUTTON5, &Cdraw33Dlg::OnBnClickedMfcbutton5)
 END_MESSAGE_MAP()
 
 
@@ -187,6 +199,19 @@ void Cdraw33Dlg::OnPaint()
 			}
 		}
 
+		if(lines.GetSize()>0)
+		{
+			for(int i=0;i<lines.GetSize()-reversLine;i++)
+			{
+				CPen myPen1(PS_SOLID, m_sizepen, RGB(2.5*lines[i].R,2.5*lines[i].G,2.5*lines[i].B));
+		        CPen *oldPen;
+		        oldPen=dc.SelectObject( &myPen1 );
+				lines[i].Draw(&dc);
+				dc.SelectObject(oldPen);
+
+			}
+		}
+
 		UpdateData(false);
 
 		//
@@ -230,7 +255,7 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 		 
 	CDialogEx::OnLButtonDown(nFlags, point);
 }
-
+																		 
 
 
 void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
@@ -239,7 +264,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	//my code 
 	UpdateData(true);
-	 if(Ispress && ! ToMove)
+	 if(Ispress && ! ToMove  && !Line)
 	 {
 		CClientDC dc(this);
 		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
@@ -259,6 +284,22 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		dc.LineTo(start.x,start.y);
 
 		dc.SelectObject( oldPen );
+	 }
+	 if(Ispress && ! ToMove  && Line)
+	 {
+		 CClientDC dc(this);
+		 CPen myPen1(PS_SOLID, m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+		CPen *oldPen;
+		oldPen=dc.SelectObject( &myPen1 ); 
+		dc.SetROP2(R2_NOTXORPEN);  
+		dc. MoveTo(start);
+		dc.LineTo(end);
+		end=point;
+		dc. MoveTo(start);
+		dc.LineTo(end);
+		dc.SelectObject(oldPen);
+
+
 	 }
 
 	 if(temp!=NULL && Ispress && ToMove)
@@ -303,7 +344,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
      CClientDC dc(this);
 	end=point;
 	Ispress=false;
-	if(!isin())
+	if(!isin() && !Line)
 	{
 		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		CPen *oldPen;
@@ -319,7 +360,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	}
 	
-	if( ! ToMove)
+	if( ! ToMove && !Line)
 		{
 		 CBrush b;
 		 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
@@ -365,6 +406,19 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			dc.LineTo(end.x,start.y);
 			dc.LineTo(start.x,start.y);
 		 	dc.SelectObject(oldPen);
+	}
+
+	if(Line && !ToMove)
+	{
+		for(int i=0;i<reversLine;i++)
+		 {
+			 lines.RemoveAt(lines.GetSize()-1);
+		
+		 }
+		reversLine=0;
+		end=point;
+		MYLine temp (start,end,m_red,m_green,m_blue);
+		lines.Add(temp); 
 	}
 	//ToMove=false;
 	temp=NULL;
@@ -496,4 +550,89 @@ void Cdraw33Dlg::OnBnClickedMfcbutton1()
 
 	UpdateData(false);
 
+}
+
+
+void Cdraw33Dlg::OnBnClickedButton3()
+{
+	// TODO: Add your control notification handler code here
+		//my code
+	UpdateData(true);
+	Line=	! Line;
+	CButton *b=(CButton *)GetDlgItem(IDC_BUTTON3);
+	if(Line)
+	{
+		b->SetWindowText("Line");
+	}
+	else
+	   b->SetWindowText("Shapes");
+
+	UpdateData(false);
+}
+
+
+void Cdraw33Dlg::OnBnClickedMfcbutton2()
+{
+	// TODO: Add your control notification handler code here
+	if(reversLine<lines.GetSize())
+	{
+		reversLine++;
+		Invalidate();
+	}
+}
+
+
+void Cdraw33Dlg::OnBnClickedMfcbutton3()
+{
+	// TODO: Add your control notification handler code here
+	if(reversLine>0)
+	{
+		reversLine--;
+		Invalidate();
+	}
+}
+
+
+void Cdraw33Dlg::OnNMCustomdrawSlider4(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	UpdateData(true);
+
+	/*CClientDC dc(this);
+	CPen myPen1(PS_SOLID,0.5* m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+	CPen *oldPen;
+	oldPen=dc.SelectObject( &myPen1 ); 
+	dc.MoveTo(275,425);
+	dc.LineTo(290,425);
+	
+
+	dc.SelectObject(oldPen);
+
+	 UpdateData(false);
+	 dc.SetROP2(R2_NOTXORPEN); 
+	dc.MoveTo(275,425);
+	dc.LineTo(290,425);*/
+	
+	*pResult = 0;
+}
+
+
+void Cdraw33Dlg::OnBnClickedMfcbutton4()
+{
+	// TODO: Add your control notification handler code here
+	for(int i=0;i<=figs.GetSize();i++)
+	{
+		delete figs[figs.GetSize()-1];
+		figs.RemoveAt(figs.GetSize()-1);
+		Invalidate();
+	}
+}
+
+
+void Cdraw33Dlg::OnBnClickedMfcbutton5()
+{
+	// TODO: Add your control notification handler code here
+	lines.RemoveAll();
+	Invalidate();
 }
