@@ -65,10 +65,11 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 
 Cdraw33Dlg::~Cdraw33Dlg()
 {
-	/*for(int i=0;i<figs.GetSize();i++)
+	
+	for(int i=0;i<figs.GetSize();i++)
 	{
 		delete figs[figs.GetSize()-1-i];
-	}*/
+	}
 }
 
 
