@@ -261,15 +261,22 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	 if(temp!=NULL && Ispress && ToMove)
 	 {
+		 //check
+		 int x,y;
+		int xx,yy;
+		xx = dist.x, yy = dist.y;
+		dist = point;
+		x = (dist.x - xx);
+		y = (dist.y - yy);
 
 		 temp->R=m_red;
 		 temp->G=m_green;
 		 temp->B=m_blue;
 
-		 temp->A.x=temp->A.x +	(point.x-dist.x );
-		 temp->A.y=temp->A.y + (point.y-dist.y);
-		 temp->C.x=temp->C.x +	(point.x-dist.x );
-		 temp->C.y=temp->C.y + (point.y-dist.y);
+		 temp->A.x=temp->A.x +	x;
+		 temp->A.y=temp->A.y + y;
+		 temp->C.x=temp->C.x +	x;
+		 temp->C.y=temp->C.y + y;
 		 Invalidate();
 	 }
 	 
