@@ -599,7 +599,7 @@ void Cdraw33Dlg::OnNMCustomdrawSlider4(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: Add your control notification handler code here
 	UpdateData(true);
 
-	/*CClientDC dc(this);
+	/*CClientDC dc(this) ;
 	CPen myPen1(PS_SOLID,0.5* m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 	CPen *oldPen;
 	oldPen=dc.SelectObject( &myPen1 ); 
