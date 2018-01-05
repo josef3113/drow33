@@ -76,6 +76,8 @@ Cdraw33Dlg::~Cdraw33Dlg()
 		delete figs[figs.GetSize()-1-i];
 	}
 
+
+
 	//
 }
 
@@ -261,6 +263,12 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	 if(temp!=NULL && Ispress && ToMove)
 	 {
+		RECT r;	  //(5,5,995,395)
+		r.left=5;
+		r.top=5;
+		r.bottom=395;
+		r.right=995;
+		
 		 //check
 		 int x,y;
 		int xx,yy;
@@ -277,7 +285,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		 temp->A.y=temp->A.y + y;
 		 temp->C.x=temp->C.x +	x;
 		 temp->C.y=temp->C.y + y;
-		 Invalidate();
+		 InvalidateRect(&r);
 	 }
 	 
 	 UpdateData(false);
@@ -290,6 +298,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
 	UpdateData(true);
+	
 	
      CClientDC dc(this);
 	end=point;
@@ -357,7 +366,8 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			dc.LineTo(start.x,start.y);
 		 	dc.SelectObject(oldPen);
 	}
-
+	//ToMove=false;
+	temp=NULL;
 	
 	UpdateData(false);
 	//
@@ -473,6 +483,16 @@ void Cdraw33Dlg::OnBnClickedMfcbutton1()
 {
 	// TODO: Add your control notification handler code here
 	//my code
+	UpdateData(true);
 	ToMove=	! ToMove;
+	CButton *b=(CButton *)GetDlgItem(IDC_MFCBUTTON1);
+	if(ToMove)
+	{
+		b->SetWindowText("Move");
+	}
+	else
+	   b->SetWindowText("Create");
+
+	UpdateData(false);
 
 }
