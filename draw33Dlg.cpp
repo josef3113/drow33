@@ -481,6 +481,7 @@ void Cdraw33Dlg::OnBnClickedButton2()
 
 void Cdraw33Dlg::OnBnClickedMfcbutton1()
 {
+
 	// TODO: Add your control notification handler code here
 	//my code
 	UpdateData(true);
