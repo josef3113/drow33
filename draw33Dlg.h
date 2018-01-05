@@ -19,6 +19,7 @@ class Cdraw33Dlg : public CDialogEx
 	bool Ispress;
 	CPoint start;
 	CPoint end;
+	CPoint dist;
 	bool ToMove;
 	Shape * temp;
 public:

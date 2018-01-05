@@ -207,6 +207,7 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 		  Ispress=true;
 		  start=point;
 		  end=point;
+		  dist=point;
 		  if(ToMove)
 		  {
 			  for(int i=0;i<figs.GetSize();i++)
@@ -260,9 +261,15 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	 if(temp!=NULL && Ispress && ToMove)
 	 {
+
 		 temp->R=m_red;
 		 temp->G=m_green;
 		 temp->B=m_blue;
+
+		 temp->A.x=temp->A.x +	(point.x-dist.x );
+		 temp->A.y=temp->A.y + (point.y-dist.y);
+		 temp->C.x=temp->C.x +	(point.x-dist.x );
+		 temp->C.y=temp->C.y + (point.y-dist.y);
 		 Invalidate();
 	 }
 	 
