@@ -310,7 +310,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			dc.LineTo(end.x,end.y);
 			dc.LineTo(end.x,start.y);
 			dc.LineTo(start.x,start.y);
-			dc.SelectObject(oldPen);
+		 	dc.SelectObject(oldPen);
 	}
 
 	
