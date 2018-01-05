@@ -6,6 +6,8 @@
 #include "draw33.h"
 #include "draw33Dlg.h"
 #include "afxdialogex.h"
+#include "Rectangle.h"
+#include "Ellipse.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -63,9 +65,9 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 
 Cdraw33Dlg::~Cdraw33Dlg()
 {
-	/*for(int i=0;i<figs.GetSize()-1;i++)
+	/*for(int i=0;i<figs.GetSize();i++)
 	{
-		delete figs[figs.GetSize()-1];
+		delete figs[figs.GetSize()-1-i];
 	}*/
 }
 
@@ -156,7 +158,7 @@ void Cdraw33Dlg::OnPaint()
 		CPaintDC dc(this); // device context for painting
 		
 		 // b.CreateSolidBrush(RGB(2.5*R,2.5*G,2.5*B));
-		dc.Rectangle(5,5,555,320);
+		dc.Rectangle(5,5,995,395);
 		if(figs.GetCount()>0)
 		{
 			for(int i=0;i<figs.GetCount()-revers;i++)
@@ -259,14 +261,23 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 if(nFlags==MK_CONTROL)
 		 {
 			dc.Rectangle(start.x,start.y,end.x,end.y);
-			figs.Add(new RectangleM(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
+
+
+			figs.Add(new MYRectangle(start,end,m_red,m_green,m_blue));
+
+
+
 			//indexarr++;
 
 		 }
 		 else
 		 {
 			 dc.Ellipse(start.x,start.y,end.x,end.y);
-			 figs.Add(new EllipseM(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
+
+
+			 figs.Add(new MYEllipse(start,end,m_red,m_green,m_blue));
+
+
 			//indexarr++;
 		 }
 	
@@ -287,11 +298,13 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 bool Cdraw33Dlg::isin()
 {
-	if(start.x<5||start.x> 555||end.x<5||end.x> 555
-		||	start.y<5||start.y> 320||end.y<5||end.y> 320)
+	if(start.x<5||start.x> 995||end.x<5||end.x> 995
+		||	start.y<5||start.y> 395||end.y<5||end.y> 395)
 		return false;
 	else 
 		return true;
+
+	
 
 }
 
@@ -304,7 +317,7 @@ void Cdraw33Dlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	 CBrush b;
 	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 	 dc.SelectObject(&b);
-	 dc.Rectangle(5,340,55,390);
+	 dc.Rectangle(5,400,55,450);
 	 UpdateData(false);
 	*pResult = 0;
 }
@@ -320,7 +333,7 @@ void Cdraw33Dlg::OnNMCustomdrawSlider3(NMHDR *pNMHDR, LRESULT *pResult)
 	 CBrush b;
 	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 	 dc.SelectObject(&b);
-	 dc.Rectangle(5,340,55,390);
+	 dc.Rectangle(5,400,55,450);
 	 UpdateData(false);
 	*pResult = 0;
 }
@@ -336,7 +349,7 @@ void Cdraw33Dlg::OnNMCustomdrawSlider2(NMHDR *pNMHDR, LRESULT *pResult)
 	 CBrush b;
 	 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 	 dc.SelectObject(&b);
-	 dc.Rectangle(5,340,55,390);
+	 dc.Rectangle(5,400,55,450);
 	 UpdateData(false);
 
 	*pResult = 0;

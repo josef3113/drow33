@@ -3,7 +3,8 @@
 //
 
 #pragma once
-#include "Figure.h"
+#include"Shape.h"
+//#include "Figure.h"
 
 #include <afxtempl.h>  
 
@@ -11,7 +12,7 @@
 class Cdraw33Dlg : public CDialogEx
 {
 // Construction
-	CArray <Figure *> figs;
+	CArray <Shape* > figs;
 	int revers;
 	int indexarr;
 	//my variable

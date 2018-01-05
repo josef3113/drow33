@@ -39,7 +39,16 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Figure.h">
+    <ClInclude Include="Shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ellipse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +62,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Figure.cpp">
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ellipse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
