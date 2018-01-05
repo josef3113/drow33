@@ -60,6 +60,8 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	revers=0;
 	indexarr=0;
 	Ispress=false;
+	ToMove=false;
+	temp=NULL;
 
 	//
 
@@ -102,6 +104,7 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER2, &Cdraw33Dlg::OnNMCustomdrawSlider2)
 	ON_BN_CLICKED(IDC_BUTTON1, &Cdraw33Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &Cdraw33Dlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_MFCBUTTON1, &Cdraw33Dlg::OnBnClickedMfcbutton1)
 END_MESSAGE_MAP()
 
 
@@ -203,6 +206,21 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 		  Ispress=true;
 		  start=point;
 		  end=point;
+		  if(ToMove)
+		  {
+			  for(int i=0;i<figs.GetSize();i++)
+				{
+					if(figs[i]->isinshap(point.x,point.y))
+					{
+						figs[i]->R=m_red;
+						figs[i]->G=m_green;
+						figs[i]->B=m_blue;
+					
+						Invalidate();
+					}
+				
+				}
+		  }
 		 
 	CDialogEx::OnLButtonDown(nFlags, point);
 }
@@ -214,7 +232,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: Add your message handler code here and/or call default
 
 	//my code 
-	 if(Ispress)
+	 if(Ispress && ! ToMove)
 	 {
 		CClientDC dc(this);
 		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
@@ -235,6 +253,8 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 		dc.SelectObject( oldPen );
 	 }
+
+	 
 
 	 //
 	CDialogEx::OnMouseMove(nFlags, point);
@@ -265,7 +285,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	}
 	
-	else
+	if( ! ToMove)
 		{
 		 CBrush b;
 		 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
@@ -421,4 +441,13 @@ void Cdraw33Dlg::OnBnClickedButton2()
 	}
 	//
 	
+}
+
+
+void Cdraw33Dlg::OnBnClickedMfcbutton1()
+{
+	// TODO: Add your control notification handler code here
+	//my code
+	ToMove=	! ToMove;
+
 }

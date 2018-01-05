@@ -34,6 +34,13 @@ public:
 	//----function of Rectangle
 
 	void Draw(CDC *dc);
+	bool isinshap(int x,int y)
+	{
+		if( (x > this->A.x) && (x < this->C.x) && (y > this->A.y) && (y < this->C.y) )
+			return true;
+		else
+			return false;
+	}
      
 	double getArea()const;
 	double getPerimeter()const;

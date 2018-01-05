@@ -37,6 +37,13 @@ public:
 	//MYEllipse& operator =(const MYEllipse&);
 
 	void Draw(CDC *dc);
+	bool isinshap(int x,int y)
+	{
+		if( (x > this->A.x) && (x < this->C.x) && (y > this->A.y) && (y < this->C.y) )
+			return true;
+		else
+			return false;
+	}
 
 	//----function of Ellipse
 	double getArea()const;

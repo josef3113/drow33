@@ -19,6 +19,8 @@ class Cdraw33Dlg : public CDialogEx
 	bool Ispress;
 	CPoint start;
 	CPoint end;
+	bool ToMove;
+	Shape * temp;
 public:
 	Cdraw33Dlg(CWnd* pParent = NULL);	// standard constructor
 	 ~Cdraw33Dlg();
@@ -53,4 +55,5 @@ public:
 	afx_msg void OnNMCustomdrawSlider2(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedMfcbutton1();
 };
