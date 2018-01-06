@@ -316,20 +316,13 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 		if(temp->A.x+x >5 && temp->C.x+x <995 && temp->A.y+y >5 && temp->C.y+y <395)
 		 {									  //(5,5,995,395);
-		 RECT r;
-			r.bottom=5;
-			r.top=395;
-			r.left=	5;
-			r.right=995;
+		RECT r;
+		r.bottom=max(temp->A.y,temp->C.y)+10;
+			r.top=min(temp->A.y,temp->C.y)-10;
+			r.left=	min(temp->A.x,temp->C.x)-10;
+			r.right=max(temp->A.x,temp->C.x)+10;	
 		
-		 //check
-		 /*int x,y;
-		int xx,yy;
-		xx = dist.x, yy = dist.y;
-		dist = point;
-		x = (dist.x - xx);
-		y = (dist.y - yy);
-*/
+		 
 		 temp->R=m_red;
 		 temp->G=m_green;
 		 temp->B=m_blue;
