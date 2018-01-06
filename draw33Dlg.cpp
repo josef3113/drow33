@@ -375,10 +375,16 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		  revers=0;
 		 if(nFlags==MK_CONTROL)
 		 {
-			dc.Rectangle(start.x,start.y,end.x,end.y);
+			 RECT r;
+			r.bottom=end.y+50;
+			r.top=start.y-50;
+			r.left=	start.x-50;
+			r.right=end.x+50;
+			//dc.Rectangle(start.x,start.y,end.x,end.y);
 
 
 			figs.Add(new MYRectangle(start,end,m_red,m_green,m_blue));
+			InvalidateRect(&r);
 
 
 
@@ -387,10 +393,16 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 }
 		 else
 		 {
-			 dc.Ellipse(start.x,start.y,end.x,end.y);
+			 //dc.Ellipse(start.x,start.y,end.x,end.y);
+			 RECT r;
+			r.bottom=end.y+50;
+			r.top=start.y-50;
+			r.left=	start.x-50;
+			r.right=end.x+50;
 
 
 			 figs.Add(new MYEllipse(start,end,m_red,m_green,m_blue));
+			 InvalidateRect(&r);
 
 
 			//indexarr++;
@@ -410,6 +422,27 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	if(Line && !ToMove)
 	{
+		if(! isin())
+		{
+			RECT r;
+			r.bottom=start.y+50;
+			r.top=start.y-50;
+			r.left=	start.x-50;
+			r.right=start.x+50;			
+		  CClientDC dc(this);
+		 CPen myPen1(PS_SOLID, m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+		CPen *oldPen;
+		oldPen=dc.SelectObject( &myPen1 ); 
+		dc.SetROP2(R2_NOTXORPEN);
+		dc. MoveTo(start);
+		dc.LineTo(end);
+		InvalidateRect(&r);
+		dc.SelectObject(oldPen);
+		  
+
+		}
+		else
+		{
 		for(int i=0;i<reversLine;i++)
 		 {
 			 lines.RemoveAt(lines.GetSize()-1);
@@ -419,6 +452,14 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		end=point;
 		MYLine temp (start,end,m_red,m_green,m_blue);
 		lines.Add(temp); 
+		RECT r;
+			
+			r.top=start.y-50;
+			r.left=	start.x-50;
+			r.right=end.x+50;
+			r.bottom=end.y+50;
+			InvalidateRect(&r);
+		}
 	}
 	//ToMove=false;
 	temp=NULL;
@@ -625,6 +666,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton4()
 	{
 		delete figs[figs.GetSize()-1];
 		figs.RemoveAt(figs.GetSize()-1);
+		revers=0;
 		Invalidate();
 	}
 }
@@ -634,5 +676,6 @@ void Cdraw33Dlg::OnBnClickedMfcbutton5()
 {
 	// TODO: Add your control notification handler code here
 	lines.RemoveAll();
+	reversLine=0;
 	Invalidate();
 }
