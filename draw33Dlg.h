@@ -15,9 +15,9 @@ class Cdraw33Dlg : public CDialogEx
 // Construction
 	CArray <Shape* > figs;
 	CArray <MYLine> lines;
-	int revers;
+	int reversShap;
 	int reversLine;
-	int indexarr;
+	//int indexarr;
 	//my variable
 	bool Ispress;
 	CPoint start;

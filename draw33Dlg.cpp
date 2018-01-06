@@ -56,11 +56,11 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	, m_green(0)
 	, m_blue(0)
 	, m_sizepen(0)
-	, r_sizepen(0)
+	, r_sizepen(1)
 {
 	// my code
-	revers=0;
-	indexarr=0;
+	reversShap=0;
+	//indexarr=0;
 	reversLine=0;
 	Ispress=false;
 	ToMove=false;
@@ -101,6 +101,7 @@ void Cdraw33Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Slider(pDX, IDC_SLIDER4, m_sizepen);
 	DDV_MinMaxInt(pDX, m_sizepen, 0, 100);
 	DDX_Text(pDX, IDC_EDIT1, r_sizepen);
+	DDV_MinMaxInt(pDX, r_sizepen, 0, INT_MAX);
 }
 
 BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
@@ -192,7 +193,7 @@ void Cdraw33Dlg::OnPaint()
 
 		if(figs.GetSize()>0)
 		{
-			for(int i=0;i<figs.GetSize()-revers;i++)
+			for(int i=0;i<figs.GetSize()-reversShap;i++)
 			{
 				CBrush b;
 				b.CreateSolidBrush(RGB(2.5*figs[i]->R,2.5*figs[i]->G,2.5*figs[i]->B));
@@ -317,10 +318,10 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		if(temp->A.x+x >5 && temp->C.x+x <995 && temp->A.y+y >5 && temp->C.y+y <395)
 		 {									  //(5,5,995,395);
 		RECT r;
-		r.bottom=max(temp->A.y,temp->C.y)+10;
-			r.top=min(temp->A.y,temp->C.y)-10;
-			r.left=	min(temp->A.x,temp->C.x)-10;
-			r.right=max(temp->A.x,temp->C.x)+10;	
+		r.bottom=max(temp->A.y,temp->C.y)+7;
+			r.top=min(temp->A.y,temp->C.y)-7;
+			r.left=	min(temp->A.x,temp->C.x)-7;
+			r.right=max(temp->A.x,temp->C.x)+7;	
 		
 		 
 		 temp->R=m_red;
@@ -372,13 +373,13 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		 dc.SelectObject(&b);
 		//dc->Rectangle(x1,y1,x2,y2);
-		 for(int i=0;i<revers;i++)
+		 for(int i=0;i<reversShap;i++)
 		 {
 			 delete figs[ figs.GetSize()-1];
 			 figs.RemoveAt(figs.GetSize()-1);
 		
 		 }
-		  revers=0;
+		  reversShap=0;
 		 if(nFlags==MK_CONTROL)
 		 {
 			 RECT r;
@@ -560,9 +561,9 @@ void Cdraw33Dlg::OnBnClickedButton1()
 {
 	// TODO: Add your control notification handler code here
 	//my code
-	if(revers<figs.GetCount())
+	if(reversShap<figs.GetCount())
 	{
-		revers++;
+		reversShap++;
 	Invalidate();
 	}
 	//
@@ -574,9 +575,9 @@ void Cdraw33Dlg::OnBnClickedButton2()
 {
 	// TODO: Add your control notification handler code here
 	// my code
-	if(revers>0)
+	if(reversShap>0)
 	{
-		revers--;
+		reversShap--;
 		Invalidate();
 
 	}
@@ -669,7 +670,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton4()
 		
 		
 	}
-		revers=0;
+		reversShap=0;
 		Invalidate();
 }
 
