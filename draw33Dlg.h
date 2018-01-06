@@ -68,4 +68,5 @@ public:
 	afx_msg void OnNMCustomdrawSlider4(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedMfcbutton4();
 	afx_msg void OnBnClickedMfcbutton5();
+	int r_sizepen;
 };

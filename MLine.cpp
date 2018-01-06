@@ -5,10 +5,11 @@
 
 
 
-MYLine::MYLine(CPoint A , CPoint C,int R,int G,int B )
+MYLine::MYLine(CPoint A , CPoint C,int R,int G,int B,int sizeLpen )
 {
 	this->A=A;
 	this->C=C;
+	this->sizeLpen=sizeLpen;
 
 	this->R=R;
 	this->G=G;

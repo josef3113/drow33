@@ -56,6 +56,7 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	, m_green(0)
 	, m_blue(0)
 	, m_sizepen(0)
+	, r_sizepen(0)
 {
 	// my code
 	revers=0;
@@ -74,7 +75,8 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 Cdraw33Dlg::~Cdraw33Dlg()
 {
 	//my code
-	for(int i=0;i<figs.GetSize();i++)
+	int size=figs.GetSize();
+	for(int i=0;i<size;i++)
 	{
 		delete figs[figs.GetSize()-1];
 		figs.RemoveAt(figs.GetSize()-1);
@@ -98,6 +100,7 @@ void Cdraw33Dlg::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_blue, 0, 100);
 	DDX_Slider(pDX, IDC_SLIDER4, m_sizepen);
 	DDV_MinMaxInt(pDX, m_sizepen, 0, 100);
+	DDX_Text(pDX, IDC_EDIT1, r_sizepen);
 }
 
 BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
@@ -203,7 +206,7 @@ void Cdraw33Dlg::OnPaint()
 		{
 			for(int i=0;i<lines.GetSize()-reversLine;i++)
 			{
-				CPen myPen1(PS_SOLID, m_sizepen, RGB(2.5*lines[i].R,2.5*lines[i].G,2.5*lines[i].B));
+				CPen myPen1(PS_SOLID, 0.5*lines[i].sizeLpen, RGB(2.5*lines[i].R,2.5*lines[i].G,2.5*lines[i].B));
 		        CPen *oldPen;
 		        oldPen=dc.SelectObject( &myPen1 );
 				lines[i].Draw(&dc);
@@ -235,7 +238,7 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 		  start=point;
 		  end=point;
 		  dist=point;
-		  if(ToMove)
+		  if(ToMove && ! Line)
 		  {
 			  for(int i=0;i<figs.GetSize();i++)
 				{
@@ -288,7 +291,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 	 if(Ispress && ! ToMove  && Line)
 	 {
 		 CClientDC dc(this);
-		 CPen myPen1(PS_SOLID, m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+		 CPen myPen1(PS_SOLID, 0.5*m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		CPen *oldPen;
 		oldPen=dc.SelectObject( &myPen1 ); 
 		dc.SetROP2(R2_NOTXORPEN);  
@@ -304,20 +307,29 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	 if(temp!=NULL && Ispress && ToMove)
 	 {
-		RECT r;	  //(5,5,995,395)
-		r.left=5;
-		r.top=5;
-		r.bottom=395;
-		r.right=995;
-		
-		 //check
-		 int x,y;
+		  int x,y;
 		int xx,yy;
 		xx = dist.x, yy = dist.y;
 		dist = point;
 		x = (dist.x - xx);
 		y = (dist.y - yy);
 
+		if(temp->A.x+x >5 && temp->C.x+x <995 && temp->A.y+y >5 && temp->C.y+y <395)
+		 {									  //(5,5,995,395);
+		 RECT r;
+			r.bottom=5;
+			r.top=395;
+			r.left=	5;
+			r.right=995;
+		
+		 //check
+		 /*int x,y;
+		int xx,yy;
+		xx = dist.x, yy = dist.y;
+		dist = point;
+		x = (dist.x - xx);
+		y = (dist.y - yy);
+*/
 		 temp->R=m_red;
 		 temp->G=m_green;
 		 temp->B=m_blue;
@@ -327,6 +339,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		 temp->C.x=temp->C.x +	x;
 		 temp->C.y=temp->C.y + y;
 		 InvalidateRect(&r);
+		 }
 	 }
 	 
 	 UpdateData(false);
@@ -344,7 +357,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
      CClientDC dc(this);
 	end=point;
 	Ispress=false;
-	if(!isin() && !Line)
+	if(!isin() && !Line  && !ToMove)	
 	{
 		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		CPen *oldPen;
@@ -376,10 +389,11 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 if(nFlags==MK_CONTROL)
 		 {
 			 RECT r;
-			r.bottom=end.y+50;
-			r.top=start.y-50;
-			r.left=	start.x-50;
-			r.right=end.x+50;
+			r.bottom=max(start.y,end.y)+50;
+			r.top=min(start.y,end.y)-50;
+			r.left=	min(start.x,end.x)-50;
+			r.right=max(start.x,end.x)+50;
+			
 			//dc.Rectangle(start.x,start.y,end.x,end.y);
 
 
@@ -394,11 +408,11 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 else
 		 {
 			 //dc.Ellipse(start.x,start.y,end.x,end.y);
-			 RECT r;
-			r.bottom=end.y+50;
-			r.top=start.y-50;
-			r.left=	start.x-50;
-			r.right=end.x+50;
+			RECT r;
+			r.bottom=max(start.y,end.y)+50;
+			r.top=min(start.y,end.y)-50;
+			r.left=	min(start.x,end.x)-50;
+			r.right=max(start.x,end.x)+50;	
 
 
 			 figs.Add(new MYEllipse(start,end,m_red,m_green,m_blue));
@@ -425,19 +439,19 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		if(! isin())
 		{
 			RECT r;
-			r.bottom=start.y+50;
-			r.top=start.y-50;
-			r.left=	start.x-50;
-			r.right=start.x+50;			
-		  CClientDC dc(this);
-		 CPen myPen1(PS_SOLID, m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
+			r.bottom=max(start.y,end.y)+50;
+			r.top=min(start.y,end.y)-50;
+			r.left=	min(start.x,end.x)-50;
+			r.right=max(start.x,end.x)+50;			
+		 /* CClientDC dc(this);
+		 CPen myPen1(PS_SOLID, 0.5*m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		CPen *oldPen;
 		oldPen=dc.SelectObject( &myPen1 ); 
 		dc.SetROP2(R2_NOTXORPEN);
 		dc. MoveTo(start);
-		dc.LineTo(end);
+		dc.LineTo(end);*/
 		InvalidateRect(&r);
-		dc.SelectObject(oldPen);
+		//dc.SelectObject(oldPen);
 		  
 
 		}
@@ -450,19 +464,23 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 }
 		reversLine=0;
 		end=point;
-		MYLine temp (start,end,m_red,m_green,m_blue);
+		MYLine temp (start,end,m_red,m_green,m_blue,m_sizepen);
 		lines.Add(temp); 
-		RECT r;
+		
 			
-			r.top=start.y-50;
-			r.left=	start.x-50;
-			r.right=end.x+50;
-			r.bottom=end.y+50;
+			RECT r;
+			r.bottom=max(start.y,end.y)+50;
+			r.top=min(start.y,end.y)-50;
+			r.left=	min(start.x,end.x)-50;
+			r.right=max(start.x,end.x)+50;	
 			InvalidateRect(&r);
 		}
 	}
 	//ToMove=false;
-	temp=NULL;
+	if(ToMove)
+	{
+		temp=NULL;
+	}
 	
 	UpdateData(false);
 	//
@@ -639,21 +657,9 @@ void Cdraw33Dlg::OnNMCustomdrawSlider4(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
 	// TODO: Add your control notification handler code here
 	UpdateData(true);
+	r_sizepen=0.5* m_sizepen;
 
-	/*CClientDC dc(this) ;
-	CPen myPen1(PS_SOLID,0.5* m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
-	CPen *oldPen;
-	oldPen=dc.SelectObject( &myPen1 ); 
-	dc.MoveTo(275,425);
-	dc.LineTo(290,425);
-	
-
-	dc.SelectObject(oldPen);
-
-	 UpdateData(false);
-	 dc.SetROP2(R2_NOTXORPEN); 
-	dc.MoveTo(275,425);
-	dc.LineTo(290,425);*/
+	UpdateData(false);
 	
 	*pResult = 0;
 }
@@ -662,13 +668,16 @@ void Cdraw33Dlg::OnNMCustomdrawSlider4(NMHDR *pNMHDR, LRESULT *pResult)
 void Cdraw33Dlg::OnBnClickedMfcbutton4()
 {
 	// TODO: Add your control notification handler code here
-	for(int i=0;i<=figs.GetSize();i++)
+	int size=figs.GetSize();
+	for(int i=0;i<size;i++)
 	{
 		delete figs[figs.GetSize()-1];
 		figs.RemoveAt(figs.GetSize()-1);
+		
+		
+	}
 		revers=0;
 		Invalidate();
-	}
 }
 
 
