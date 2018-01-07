@@ -56,7 +56,7 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	, m_green(0)
 	, m_blue(0)
 	, m_sizepen(0)
-	, r_sizepen(1)
+	, r_sizepen(0)
 {
 	// my code
 	reversShap=0;
