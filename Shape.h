@@ -14,6 +14,8 @@ public:
 	Shape(){}
 	
 	virtual bool isinshap(int x,int y)=0;
+	virtual void select()=0;
+	virtual void moved()=0;
     virtual void Draw(CDC *dc)=0;
 
 	virtual ~Shape(){}

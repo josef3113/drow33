@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Rectangle.h"
+#include <MMSystem.h>
 
 
 
@@ -36,4 +37,14 @@ bool MYRectangle::isinshap(int x,int y)
 		else
 			return false;
 	}
+}
+
+void MYRectangle::select()
+{
+	 PlaySound(TEXT("Rectengle_Selected.wav"),NULL,SND_ASYNC|SND_FILENAME);
+}
+
+void MYRectangle::moved()
+{
+	 PlaySound(TEXT("Moved_Rectangle.wav"),NULL,SND_ASYNC|SND_FILENAME);
 }

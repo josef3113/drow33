@@ -8,6 +8,7 @@
 #include "afxdialogex.h"
 #include "Rectangle.h"
 #include "Ellipse.h"
+#include <MMSystem.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,7 +49,7 @@ END_MESSAGE_MAP()
 // Cdraw33Dlg dialog
 
 
-
+//	PlaySound(Text("name.wav"),NULL,SND_ASNC|SND_FILENAME);
 
 Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(Cdraw33Dlg::IDD, pParent)
@@ -251,6 +252,7 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 					
 						Invalidate();*/
 						temp=figs[i];
+					//	temp->select();
 					}
 				
 				}
@@ -471,8 +473,9 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		}
 	}
 	//ToMove=false;
-	if(ToMove)
+	if(ToMove && temp!=NULL)
 	{
+		//temp->moved();
 		temp=NULL;
 	}
 	
@@ -565,6 +568,7 @@ void Cdraw33Dlg::OnBnClickedButton1()
 	{
 		reversShap++;
 	Invalidate();
+	//PlaySound(TEXT("Undo_Shape.wav"),NULL,SND_ASYNC|SND_FILENAME);
 	}
 	//
 	
@@ -579,6 +583,7 @@ void Cdraw33Dlg::OnBnClickedButton2()
 	{
 		reversShap--;
 		Invalidate();
+		//PlaySound(TEXT("Redo_Shape.wav"),NULL,SND_ASYNC|SND_FILENAME);
 
 	}
 	//
@@ -631,6 +636,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton2()
 	{
 		reversLine++;
 		Invalidate();
+		//PlaySound(TEXT("Undo_Line.wav"),NULL,SND_ASYNC|SND_FILENAME);
 	}
 }
 
@@ -642,6 +648,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton3()
 	{
 		reversLine--;
 		Invalidate();
+		//PlaySound(TEXT("Redo_Line.wav"),NULL,SND_ASYNC|SND_FILENAME);
 	}
 }
 

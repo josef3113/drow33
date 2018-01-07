@@ -19,6 +19,8 @@ public:
 
 	void Draw(CDC *dc);
 	bool isinshap(int x,int y){return false;}
+	void select(){};
+	void moved(){};
 	
 
 

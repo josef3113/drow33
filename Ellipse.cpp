@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Ellipse.h"
 #include "Shape.h"
-
+#include <MMSystem.h>
 
 
 
@@ -39,5 +39,15 @@ bool MYEllipse::isinshap(int x,int y)
 void MYEllipse::Draw(CDC *dc)
 {
 	dc->Ellipse(A.x,A.y,C.x,C.y);
+}
+
+void MYEllipse::select()
+{
+  PlaySound(TEXT("ellipse_selected.wav"),NULL,SND_ASYNC|SND_FILENAME);
+}
+
+void MYEllipse::moved()
+{
+	 PlaySound(TEXT("Moved_Ellipse.wav"),NULL,SND_ASYNC|SND_FILENAME);
 }
 

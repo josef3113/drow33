@@ -18,6 +18,8 @@ public:
 
 	void Draw(CDC *dc);
 	bool isinshap(int x,int y) ;
+	void select();
+	void moved();
 	
      
 
