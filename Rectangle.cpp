@@ -2,17 +2,21 @@
 #include "stdafx.h"
 #include "Rectangle.h"
 #include <MMSystem.h>
+//IMPLEMENT_SERIAL (MYRectangle, CObject, 1)
 
 
 
-MYRectangle::MYRectangle(CPoint A,CPoint C,int R,int G,int B )
+MYRectangle::MYRectangle(int Ax ,int Ay, int Cx,int Cy,int R,int G,int B )
 {
+	this->Ax=Ax;
+	this->Ay=Ay;
+
+	this->Cx=Cx;
+	this->Cy=Cy;
+
 	this->R=R;
 	this->G=G;
 	this->B=B;
-	this->A=A;                          // A from inheritance of Polygon
-	this->C=C;                          // C from inheritance of Polygon
-	
 	
 
 }
@@ -26,13 +30,13 @@ MYRectangle::~MYRectangle(void)
 
 void MYRectangle::Draw(CDC *dc)
 {
-	dc->Rectangle(this->A.x,this->A.y,this->C.x,this->C.y) ;
+	dc->Rectangle(this->Ax,this->Ay,this->Cx,this->Cy) ;
 }
 
 bool MYRectangle::isinshap(int x,int y)
 {
 	{
-		if( (x > this->A.x) && (x < this->C.x) && (y > this->A.y) && (y < this->C.y) )
+		if( (x > this->Ax) && (x < this->Cx) && (y > this->Ay) && (y < this->Cy) )
 			return true;
 		else
 			return false;

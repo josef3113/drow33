@@ -6,15 +6,19 @@
 
 
 
+
+
 class MYEllipse :public Shape
 {
 
-
+	//  DECLARE_SERIAL (MYEllipse)
 public:
 	
 
-	MYEllipse(CPoint=(0,0) , CPoint=(0,0),int R=0,int G=0,int B=0 );  //difult constractor
+	MYEllipse(int Ax , int Ay,int Cx,int Cy,int R=0,int G=0,int B=0 );  //difult constractor
 	~MYEllipse();
+	MYEllipse(){}
+
 
 	void Draw(CDC *dc);
 	bool isinshap(int x,int y);

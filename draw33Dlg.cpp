@@ -10,6 +10,8 @@
 #include "Ellipse.h"
 #include <MMSystem.h>
 
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -317,23 +319,24 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		x = (dist.x - xx);
 		y = (dist.y - yy);
 
-		if(temp->A.x+x >5 && temp->C.x+x <995 && temp->A.y+y >5 && temp->C.y+y <395)
+		if(temp->Ax+x >5 && temp->Cx+x <995 && temp->Ay+y >5 && temp->Cy+y <395)
 		 {									  //(5,5,995,395);
 		RECT r;
-		r.bottom=max(temp->A.y,temp->C.y)+7;
-			r.top=min(temp->A.y,temp->C.y)-7;
-			r.left=	min(temp->A.x,temp->C.x)-7;
-			r.right=max(temp->A.x,temp->C.x)+7;	
-		
-		 
+		r.bottom=max(temp->Ay,temp->Cy)+7;
+			r.top=min(temp->Ay,temp->Cy)-7;
+			r.left=	min(temp->Ax,temp->Cx)-7;
+			r.right=max(temp->Ax,temp->Cx)+7;	
+
 		 temp->R=m_red;
 		 temp->G=m_green;
 		 temp->B=m_blue;
 
-		 temp->A.x=temp->A.x +	x;
-		 temp->A.y=temp->A.y + y;
-		 temp->C.x=temp->C.x +	x;
-		 temp->C.y=temp->C.y + y;
+		 temp->Ax=temp->Ax +	x;
+		 temp->Ay=temp->Ay + y;
+		 temp->Cx=temp->Cx +	x;
+		 temp->Cy=temp->Cy + y;
+		
+
 		 InvalidateRect(&r);
 		 }
 	 }
@@ -393,7 +396,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			//dc.Rectangle(start.x,start.y,end.x,end.y);
 
 
-			figs.Add(new MYRectangle(start,end,m_red,m_green,m_blue));
+			figs.Add(new MYRectangle(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
 			InvalidateRect(&r);
 
 
@@ -411,7 +414,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			r.right=max(start.x,end.x)+50;	
 
 
-			 figs.Add(new MYEllipse(start,end,m_red,m_green,m_blue));
+			 figs.Add(new MYEllipse(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
 			 InvalidateRect(&r);
 
 
@@ -460,7 +463,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 }
 		reversLine=0;
 		end=point;
-		MYLine temp (start,end,m_red,m_green,m_blue,m_sizepen);
+		MYLine temp (start.x,start.y,end.x,end.y,m_red,m_green,m_blue,m_sizepen);
 		lines.Add(temp); 
 		
 			

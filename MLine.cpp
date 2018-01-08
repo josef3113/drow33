@@ -4,16 +4,21 @@
 
 
 
+   
 
-MYLine::MYLine(CPoint A , CPoint C,int R,int G,int B,int sizeLpen )
+MYLine::MYLine(int Ax ,int Ay, int Cx,int Cy,int R,int G,int B,int sizeLpen )
 {
-	this->A=A;
-	this->C=C;
-	this->sizeLpen=sizeLpen;
+	this->Ax=Ax;
+	this->Ay=Ay;
+
+	this->Cx=Cx;
+	this->Cy=Cy;
 
 	this->R=R;
 	this->G=G;
 	this->B=B;
+
+	this->sizeLpen=sizeLpen;
 	
 
 }
@@ -30,7 +35,7 @@ MYLine::~MYLine(void)
 
 void MYLine::Draw(CDC *dc)
 {
-	dc->MoveTo(A);
-	dc->LineTo(C);
+	dc->MoveTo(Ax,Ay);
+	dc->LineTo(Cx,Cy);
 }
 

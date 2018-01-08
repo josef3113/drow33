@@ -5,13 +5,15 @@
 
 class MYRectangle :public Polygon
 {
-		
+	
+	//DECLARE_SERIAL (MYRectangle)
 
 public:
 
 
-	MYRectangle( CPoint=(0,0) , CPoint=(0,0),int R=0,int G=0,int B=0 ); //defult constractor
+	MYRectangle(int Ax , int Ay,int Cx,int Cy,int R=0,int G=0,int B=0 ); //defult constractor
 	~MYRectangle();
+	MYRectangle(){}
 
 	
 	//----function of Rectangle

@@ -13,6 +13,8 @@
 class Cdraw33Dlg : public CDialogEx
 {
 // Construction
+
+	//CTypedPtrArray< CObArray,Shape*> figs;
 	CArray <Shape* > figs;
 	CArray <MYLine> lines;
 	int reversShap;

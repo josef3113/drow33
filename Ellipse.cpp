@@ -1,14 +1,24 @@
 #include "stdafx.h"
+
 #include "Ellipse.h"
+#include "Rectangle.h"
 #include "Shape.h"
 #include <MMSystem.h>
 
+//IMPLEMENT_SERIAL (MYEllipse, CObject, 1)
+//IMPLEMENT_SERIAL (MYRectangle, CObject, 1)
+//IMPLEMENT_SERIAL (Shape, CObject, 1)
 
 
-MYEllipse::MYEllipse(CPoint A , CPoint C,int R,int G,int B )
+
+
+MYEllipse::MYEllipse(int Ax ,int Ay, int Cx,int Cy,int R,int G,int B )
 {
-	this->A=A;
-	this->C=C;
+	this->Ax=Ax;
+	this->Ay=Ay;
+
+	this->Cx=Cx;
+	this->Cy=Cy;
 
 	this->R=R;
 	this->G=G;
@@ -29,7 +39,7 @@ MYEllipse::~MYEllipse(void)
 bool MYEllipse::isinshap(int x,int y)
 {
 	{
-		if( (x > this->A.x) && (x < this->C.x) && (y > this->A.y) && (y < this->C.y) )
+		if( (x > this->Ax) && (x < this->Cx) && (y > this->Ay) && (y < this->Cy) )
 			return true;
 		else
 			return false;
@@ -38,7 +48,7 @@ bool MYEllipse::isinshap(int x,int y)
 
 void MYEllipse::Draw(CDC *dc)
 {
-	dc->Ellipse(A.x,A.y,C.x,C.y);
+	dc->Ellipse(Ax,Ay,Cx,Cy);
 }
 
 void MYEllipse::select()
