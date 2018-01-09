@@ -4,6 +4,7 @@
 #include <MMSystem.h>
 
 IMPLEMENT_SERIAL (MYRectangle, CObject, 1)
+IMPLEMENT_SERIAL (MYSquare, CObject, 1)
 
 
 
@@ -52,4 +53,24 @@ void MYRectangle::select()
 void MYRectangle::moved()
 {
 	 PlaySound(TEXT("Moved_Rectangle.wav"),NULL,SND_ASYNC|SND_FILENAME);
+}
+
+
+
+
+//////////////////////////////////////////
+
+MYSquare::MYSquare(int Ax ,int Ay, int Cx,int Cy,int R,int G,int B )
+{
+	this->Ax=Ax;
+	this->Ay=Ay;
+
+	this->Cx=Cx;
+	this->Cy=Cy;
+
+	this->R=R;
+	this->G=G;
+	this->B=B;
+	
+
 }

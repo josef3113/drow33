@@ -28,6 +28,7 @@ class Cdraw33Dlg : public CDialogEx
 	CPoint dist;
 	bool ToMove;
 	bool Line;
+	int typeShape;
 	MShape * temp;
 public:
 	Cdraw33Dlg(CWnd* pParent = NULL);	// standard constructor
@@ -74,4 +75,7 @@ public:
 	int r_sizepen;
 	afx_msg void OnBnClickedMfcbutton6();
 	afx_msg void OnBnClickedMfcbutton7();
+	afx_msg void OnBnClickedRadio1();
+	afx_msg void OnBnClickedRadio2();
+	afx_msg void OnBnClickedRadio3();
 };

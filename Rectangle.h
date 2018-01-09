@@ -27,4 +27,31 @@ public:
 
 };
 
+
+class MYSquare :public MYRectangle
+{
+	
+	DECLARE_SERIAL (MYSquare)
+
+public:
+
+
+	MYSquare(int Ax , int Ay,int Cx,int Cy,int R,int G,int B ); //defult constractor
+	~MYSquare(){}
+	MYSquare(){}
+
+	
+	//----function of Rectangle
+
+	//void Draw(CDC *dc);
+	//bool isinshap(int x,int y) ;
+	//void select();
+	//void moved();
+	
+     
+
+};
+
+
+
 #endif

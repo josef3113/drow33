@@ -10,6 +10,12 @@
 #include "Ellipse.h"
 #include <MMSystem.h>
 
+#define X_TOPLEFT	5		  //(5,5,995,395);
+#define Y_TOPLEFT  5
+#define X_DOWNRIGHT	    995
+#define Y_DOWNRIGHT		395
+
+
 
 
 #ifdef _DEBUG
@@ -63,6 +69,7 @@ Cdraw33Dlg::Cdraw33Dlg(CWnd* pParent /*=NULL*/)
 {
 	// my code
 	reversShap=0;
+	typeShape=1;
 	//indexarr=0;
 	reversLine=0;
 	Ispress=false;
@@ -128,6 +135,9 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCBUTTON5, &Cdraw33Dlg::OnBnClickedMfcbutton5)
 	ON_BN_CLICKED(IDC_MFCBUTTON6, &Cdraw33Dlg::OnBnClickedMfcbutton6)
 	ON_BN_CLICKED(IDC_MFCBUTTON7, &Cdraw33Dlg::OnBnClickedMfcbutton7)
+	ON_BN_CLICKED(IDC_RADIO1, &Cdraw33Dlg::OnBnClickedRadio1)
+	ON_BN_CLICKED(IDC_RADIO2, &Cdraw33Dlg::OnBnClickedRadio2)
+	ON_BN_CLICKED(IDC_RADIO3, &Cdraw33Dlg::OnBnClickedRadio3)
 END_MESSAGE_MAP()
 
 
@@ -163,6 +173,7 @@ BOOL Cdraw33Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+	CheckRadioButton(IDC_RADIO1,IDC_RADIO3,IDC_RADIO1);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -187,10 +198,8 @@ void Cdraw33Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 void Cdraw33Dlg::OnPaint()
 {
 	// my code 
-	UpdateData(true);
-		CPaintDC dc(this); 
-		
-		 // b.CreateSolidBrush(RGB(2.5*R,2.5*G,2.5*B));
+	    UpdateData(true);
+		CPaintDC dc(this);
 
 
 		dc.Rectangle(5,5,995,395);		 //to to client surface
@@ -250,11 +259,6 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 				{
 					if(figs[i]->isinshap(point.x,point.y))
 					{
-						/*figs[i]->R=m_red;
-						figs[i]->G=m_green;
-						figs[i]->B=m_blue;
-					
-						Invalidate();*/
 						temp=figs[i];
 					//	temp->select();
 					}
@@ -273,7 +277,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: Add your message handler code here and/or call default
 
 	//my code 
-	UpdateData(true);
+	 UpdateData(true);
 	 if(Ispress && ! ToMove  && !Line)
 	 {
 		CClientDC dc(this);
@@ -314,16 +318,16 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	 if(temp!=NULL && Ispress && ToMove)
 	 {
-		  int x,y;
+		int x,y;
 		int xx,yy;
 		xx = dist.x, yy = dist.y;
 		dist = point;
 		x = (dist.x - xx);
 		y = (dist.y - yy);
 
-		if(temp->Ax+x >5 && temp->Cx+x <995 && temp->Ay+y >5 && temp->Cy+y <395)
+		if(temp->Ax+x >5 && temp->Cx+x <995 && temp->Ay+y >5 && temp->Cy+y <395) // THE shape after move still in client surface
 		 {	
-			//(5,5,995,395);
+			
 		RECT r;
 		r.bottom=max(temp->Ay,temp->Cy)+7;
 			r.top=min(temp->Ay,temp->Cy)-7;
@@ -334,10 +338,10 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		 temp->G=m_green;
 		 temp->B=m_blue;
 
-		 temp->Ax=temp->Ax +	x;
-		 temp->Ay=temp->Ay + y;
-		 temp->Cx=temp->Cx +	x;
-		 temp->Cy=temp->Cy + y;
+		 temp->Ax=temp->Ax +x;
+		 temp->Ay=temp->Ay +y;
+		 temp->Cx=temp->Cx +x;
+		 temp->Cy=temp->Cy +y;
 		
 
 		 InvalidateRect(&r);
@@ -359,7 +363,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
      CClientDC dc(this);
 	end=point;
 	Ispress=false;
-	if(!isin() && !Line  && !ToMove)	
+	if(!isin() && !Line  && !ToMove)	// you not in client surface so lines deleted and not make shape
 	{
 		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		CPen *oldPen;
@@ -375,12 +379,11 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	}
 	
-	if( ! ToMove && !Line)
+	if( ! ToMove && !Line)	 // creat shape
 		{
 		 CBrush b;
 		 b.CreateSolidBrush(RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 		 dc.SelectObject(&b);
-		//dc->Rectangle(x1,y1,x2,y2);
 		 for(int i=0;i<reversShap;i++)
 		 {
 			 delete figs[ figs.GetSize()-1];
@@ -388,28 +391,30 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		
 		 }
 		  reversShap=0;
-		 if(nFlags==MK_CONTROL)
-		 {
-			 RECT r;
-			r.bottom=max(start.y,end.y)+50;
-			r.top=min(start.y,end.y)-50;
-			r.left=	min(start.x,end.x)-50;
-			r.right=max(start.x,end.x)+50;
-			
-			//dc.Rectangle(start.x,start.y,end.x,end.y);
+
+		  //for square
+		  
+		  int minx=start.x+min( abs(end.x-start.x),abs(end.y-start.y) );
+		  int miny=start.y+ min( abs(end.x-start.x),abs(end.y-start.y) );
 
 
-			figs.Add(new MYRectangle(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
-			InvalidateRect(&r);
+		  switch (typeShape)
+		  {
+			 case 3:
+			figs.Add(new MYSquare(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
+			Invalidate();
+			 break;
 
 
+		   case 2: if(minx>5 && minx <995 && miny>5 && miny<395)
+				   {
+			        figs.Add(new MYSquare(start.x,start.y,minx,miny,m_red,m_green,m_blue));
+			        Invalidate();
+				   }
+			       break;
 
-			//indexarr++;
-
-		 }
-		 else
-		 {
-			 //dc.Ellipse(start.x,start.y,end.x,end.y);
+		 
+		  case 1:
 			RECT r;
 			r.bottom=max(start.y,end.y)+50;
 			r.top=min(start.y,end.y)-50;
@@ -419,11 +424,12 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 			 figs.Add(new MYEllipse(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
 			 InvalidateRect(&r);
+			   break;
 
-
-			//indexarr++;
-		 }
+		 
+		  }
 	
+		  //to remove "rectangle " of the shape
 			CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
 			CPen *oldPen;
 			oldPen=dc.SelectObject( &myPen1 );
@@ -445,15 +451,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			r.top=min(start.y,end.y)-50;
 			r.left=	min(start.x,end.x)-50;
 			r.right=max(start.x,end.x)+50;			
-		 /* CClientDC dc(this);
-		 CPen myPen1(PS_SOLID, 0.5*m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
-		CPen *oldPen;
-		oldPen=dc.SelectObject( &myPen1 ); 
-		dc.SetROP2(R2_NOTXORPEN);
-		dc. MoveTo(start);
-		dc.LineTo(end);*/
-		InvalidateRect(&r);
-		//dc.SelectObject(oldPen);
+		   InvalidateRect(&r);
 		  
 
 		}
@@ -466,6 +464,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 }
 		reversLine=0;
 		end=point;
+
 		MYLine* temp=new MYLine (start.x,start.y,end.x,end.y,m_red,m_green,m_blue,m_sizepen);
 		lines.Add(temp); 
 		
@@ -478,7 +477,8 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 			InvalidateRect(&r);
 		}
 	}
-	//ToMove=false;
+
+
 	if(ToMove && temp!=NULL)
 	{
 		//temp->moved();
@@ -486,7 +486,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	
 	UpdateData(false);
-	//
+
 
 	CDialogEx::OnLButtonUp(nFlags, point);
 }
@@ -502,7 +502,7 @@ bool Cdraw33Dlg::isin()
 	
 
 }
-//
+
 
 void Cdraw33Dlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 {
@@ -712,7 +712,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton6()	// Save
 	// TODO: Add your control notification handler code here
 
 	TCHAR szFilters[] = _T("Project Files(*.$$)|*.$$|All Files (*.*)|(*.*)||");
-	CFileDialog fileDlg(FALSE,_T("$$"),_T("*.$$"),OFN_HIDEREADONLY, szFilters);
+	CFileDialog fileDlg(FALSE,_T("$$"),_T("DRO.!!"),OFN_HIDEREADONLY, szFilters);
 	if(fileDlg.DoModal() == IDOK)
 	{
 	CFile file(fileDlg.GetPathName(), CFile::modeCreate|CFile::modeWrite);
@@ -729,7 +729,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton7()   // Load
 {
 	// TODO: Add your control notification handler code here
 	TCHAR szFilters[] = _T("Project Files(*.$$)|*.$$|All Files (*.*)|(*.*)||");
-	CFileDialog fileDlg(FALSE,_T("$$"),_T("*.$$"),OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, szFilters);
+	CFileDialog fileDlg(FALSE,_T("$$"),_T("DRO.!!"),OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, szFilters);
 	if(fileDlg.DoModal() == IDOK)
 	{
 		CFile file(fileDlg.GetPathName(), CFile::modeRead);
@@ -741,4 +741,31 @@ void Cdraw33Dlg::OnBnClickedMfcbutton7()   // Load
 		Invalidate();
 	}
 
+}
+
+
+void Cdraw33Dlg::OnBnClickedRadio1()	   //circle
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(true);
+	typeShape=1;
+	UpdateData(false);
+}
+
+
+void Cdraw33Dlg::OnBnClickedRadio2()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(true);
+	typeShape=2;
+	UpdateData(false);
+}
+
+
+void Cdraw33Dlg::OnBnClickedRadio3()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(true);
+	typeShape=3;
+	UpdateData(false);
 }
