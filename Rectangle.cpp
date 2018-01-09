@@ -2,7 +2,8 @@
 #include "stdafx.h"
 #include "Rectangle.h"
 #include <MMSystem.h>
-//IMPLEMENT_SERIAL (MYRectangle, CObject, 1)
+
+IMPLEMENT_SERIAL (MYRectangle, CObject, 1)
 
 
 

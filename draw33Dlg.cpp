@@ -126,6 +126,8 @@ BEGIN_MESSAGE_MAP(Cdraw33Dlg, CDialogEx)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER4, &Cdraw33Dlg::OnNMCustomdrawSlider4)
 	ON_BN_CLICKED(IDC_MFCBUTTON4, &Cdraw33Dlg::OnBnClickedMfcbutton4)
 	ON_BN_CLICKED(IDC_MFCBUTTON5, &Cdraw33Dlg::OnBnClickedMfcbutton5)
+	ON_BN_CLICKED(IDC_MFCBUTTON6, &Cdraw33Dlg::OnBnClickedMfcbutton6)
+	ON_BN_CLICKED(IDC_MFCBUTTON7, &Cdraw33Dlg::OnBnClickedMfcbutton7)
 END_MESSAGE_MAP()
 
 
@@ -210,10 +212,10 @@ void Cdraw33Dlg::OnPaint()
 		{
 			for(int i=0;i<lines.GetSize()-reversLine;i++)
 			{
-				CPen myPen1(PS_SOLID, 0.5*lines[i].sizeLpen, RGB(2.5*lines[i].R,2.5*lines[i].G,2.5*lines[i].B));
+				CPen myPen1(PS_SOLID, 0.5*lines[i]->sizeLpen, RGB(2.5*lines[i]->R,2.5*lines[i]->G,2.5*lines[i]->B));
 		        CPen *oldPen;
 		        oldPen=dc.SelectObject( &myPen1 );
-				lines[i].Draw(&dc);
+				lines[i]->Draw(&dc);
 				dc.SelectObject(oldPen);
 
 			}
@@ -320,7 +322,8 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		y = (dist.y - yy);
 
 		if(temp->Ax+x >5 && temp->Cx+x <995 && temp->Ay+y >5 && temp->Cy+y <395)
-		 {									  //(5,5,995,395);
+		 {	
+			//(5,5,995,395);
 		RECT r;
 		r.bottom=max(temp->Ay,temp->Cy)+7;
 			r.top=min(temp->Ay,temp->Cy)-7;
@@ -463,7 +466,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		 }
 		reversLine=0;
 		end=point;
-		MYLine temp (start.x,start.y,end.x,end.y,m_red,m_green,m_blue,m_sizepen);
+		MYLine* temp=new MYLine (start.x,start.y,end.x,end.y,m_red,m_green,m_blue,m_sizepen);
 		lines.Add(temp); 
 		
 			
@@ -688,7 +691,54 @@ void Cdraw33Dlg::OnBnClickedMfcbutton4()
 void Cdraw33Dlg::OnBnClickedMfcbutton5()
 {
 	// TODO: Add your control notification handler code here
-	lines.RemoveAll();
+	int size=lines.GetSize();
+	for(int i=0;i<size;i++)
+	{
+		delete lines[lines.GetSize()-1];
+		lines.RemoveAt(lines.GetSize()-1);
+		
+		
+	}
+	
 	reversLine=0;
 	Invalidate();
+}
+
+
+
+
+void Cdraw33Dlg::OnBnClickedMfcbutton6()	// Save
+{
+	// TODO: Add your control notification handler code here
+
+	TCHAR szFilters[] = _T("Project Files(*.$$)|*.$$|All Files (*.*)|(*.*)||");
+	CFileDialog fileDlg(FALSE,_T("$$"),_T("*.$$"),OFN_HIDEREADONLY, szFilters);
+	if(fileDlg.DoModal() == IDOK)
+	{
+	CFile file(fileDlg.GetPathName(), CFile::modeCreate|CFile::modeWrite);
+	CArchive ar (&file, CArchive::store);
+	figs.Serialize(ar);
+		lines.Serialize(ar);
+	ar.Close();
+	file.Close();
+	}
+}
+
+
+void Cdraw33Dlg::OnBnClickedMfcbutton7()   // Load
+{
+	// TODO: Add your control notification handler code here
+	TCHAR szFilters[] = _T("Project Files(*.$$)|*.$$|All Files (*.*)|(*.*)||");
+	CFileDialog fileDlg(FALSE,_T("$$"),_T("*.$$"),OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, szFilters);
+	if(fileDlg.DoModal() == IDOK)
+	{
+		CFile file(fileDlg.GetPathName(), CFile::modeRead);
+		CArchive ar (&file, CArchive::load);
+		figs.Serialize(ar);
+		lines.Serialize(ar);
+		ar.Close();
+		file.Close();
+		Invalidate();
+	}
+
 }

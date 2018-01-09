@@ -2,12 +2,12 @@
 
 #include "Ellipse.h"
 #include "Rectangle.h"
-#include "Shape.h"
+#include "Shape.h"								 
 #include <MMSystem.h>
 
-//IMPLEMENT_SERIAL (MYEllipse, CObject, 1)
-//IMPLEMENT_SERIAL (MYRectangle, CObject, 1)
-//IMPLEMENT_SERIAL (Shape, CObject, 1)
+IMPLEMENT_SERIAL (MYEllipse, CObject, 1)
+
+
 
 
 

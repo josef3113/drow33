@@ -5,14 +5,14 @@
 
 
 
-class Polygon :public Shape
+class MPolygon :public MShape
 {
 
-
+ DECLARE_SERIAL (MPolygon)
 public:
 
-	Polygon(){};
-	~Polygon(){};
+	MPolygon(){};
+	~MPolygon(){};
 
 
 };

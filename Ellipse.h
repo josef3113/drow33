@@ -8,10 +8,10 @@
 
 
 
-class MYEllipse :public Shape
+class MYEllipse :public MShape
 {
 
-	//  DECLARE_SERIAL (MYEllipse)
+	  DECLARE_SERIAL (MYEllipse)
 public:
 	
 

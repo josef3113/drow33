@@ -3,7 +3,7 @@
 #include "Shape.h"
 
 
-
+IMPLEMENT_SERIAL (MYLine, CObject, 1)
    
 
 MYLine::MYLine(int Ax ,int Ay, int Cx,int Cy,int R,int G,int B,int sizeLpen )

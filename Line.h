@@ -6,9 +6,10 @@
 
 
 
-class MYLine :public Shape
+class MYLine :public MShape
 {
 
+	DECLARE_SERIAL (MYLine)
 
 public:
 	int sizeLpen;
@@ -22,6 +23,19 @@ public:
 	bool isinshap(int x,int y){return false;}
 	void select(){};
 	void moved(){};
+
+	void Serialize (CArchive& ar)
+	{
+		MShape::Serialize (ar);
+		if (ar.IsStoring ())
+		{
+			ar << sizeLpen;
+		}
+		else
+		{
+			ar >> sizeLpen;
+		}
+	}
 	
 
 

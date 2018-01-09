@@ -3,10 +3,10 @@
 #include "stdafx.h"
 #include "Polygon.h"
 
-class MYRectangle :public Polygon
+class MYRectangle :public MPolygon
 {
 	
-	//DECLARE_SERIAL (MYRectangle)
+	DECLARE_SERIAL (MYRectangle)
 
 public:
 

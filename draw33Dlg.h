@@ -14,9 +14,10 @@ class Cdraw33Dlg : public CDialogEx
 {
 // Construction
 
-	//CTypedPtrArray< CObArray,Shape*> figs;
-	CArray <Shape* > figs;
-	CArray <MYLine> lines;
+	CTypedPtrArray< CObArray,MShape*> figs;
+	//CArray <MShape* > figs;
+	//CArray <MYLine> lines;
+	CTypedPtrArray< CObArray,MYLine*>lines ;
 	int reversShap;
 	int reversLine;
 	//int indexarr;
@@ -27,7 +28,7 @@ class Cdraw33Dlg : public CDialogEx
 	CPoint dist;
 	bool ToMove;
 	bool Line;
-	Shape * temp;
+	MShape * temp;
 public:
 	Cdraw33Dlg(CWnd* pParent = NULL);	// standard constructor
 	 ~Cdraw33Dlg();
@@ -71,4 +72,6 @@ public:
 	afx_msg void OnBnClickedMfcbutton4();
 	afx_msg void OnBnClickedMfcbutton5();
 	int r_sizepen;
+	afx_msg void OnBnClickedMfcbutton6();
+	afx_msg void OnBnClickedMfcbutton7();
 };
