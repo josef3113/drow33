@@ -31,7 +31,7 @@ public:
 	CAboutDlg();
 
 // Dialog Data
-	enum { IDD = IDD_ABOUTBOX };
+	enum { IDD = IDD_ABOUTBOX };;
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -210,7 +210,7 @@ void Cdraw33Dlg::OnPaint()
 			for(int i=0;i<figs.GetSize()-reversShap;i++)
 			{
 				CBrush b;
-				b.CreateSolidBrush(RGB(2.5*figs[i]->R,2.5*figs[i]->G,2.5*figs[i]->B));
+				b.CreateSolidBrush(RGB(2.5*figs[i]->getR(),2.5*figs[i]->getG(),2.5*figs[i]->getB()));
 				dc.SelectObject(&b);
 		
 				figs[i]->Draw(&dc);
@@ -221,7 +221,7 @@ void Cdraw33Dlg::OnPaint()
 		{
 			for(int i=0;i<lines.GetSize()-reversLine;i++)
 			{
-				CPen myPen1(PS_SOLID, 0.5*lines[i]->sizeLpen, RGB(2.5*lines[i]->R,2.5*lines[i]->G,2.5*lines[i]->B));
+				CPen myPen1(PS_SOLID, 0.5*lines[i]->getSizeLpen(), RGB(2.5*lines[i]->getR(),2.5*lines[i]->getG(),2.5*lines[i]->getB()));
 		        CPen *oldPen;
 		        oldPen=dc.SelectObject( &myPen1 );
 				lines[i]->Draw(&dc);
@@ -325,23 +325,23 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 		x = (dist.x - xx);
 		y = (dist.y - yy);
 
-		if(temp->Ax+x >5 && temp->Cx+x <995 && temp->Ay+y >5 && temp->Cy+y <395) // THE shape after move still in client surface
+		if(temp->getAx()+x >5 && temp->getCx()+x <995 && temp->getAy()+y >5 && temp->getCy()+y <395) // THE shape after move still in client surface
 		 {	
 			
 		RECT r;
-		r.bottom=max(temp->Ay,temp->Cy)+7;
-			r.top=min(temp->Ay,temp->Cy)-7;
-			r.left=	min(temp->Ax,temp->Cx)-7;
-			r.right=max(temp->Ax,temp->Cx)+7;	
+		r.bottom=max(temp->getAy(),temp->getCy())+7;
+			r.top=min(temp->getAy(),temp->getCy())-7;
+			r.left=	min(temp->getAx(),temp->getCx())-7;
+			r.right=max(temp->getAx(),temp->getCx())+7;	
 
-		 temp->R=m_red;
-		 temp->G=m_green;
-		 temp->B=m_blue;
+		 temp->setR(m_red);
+		 temp->setG(m_green);
+		 temp->setB(m_blue);
 
-		 temp->Ax=temp->Ax +x;
-		 temp->Ay=temp->Ay +y;
-		 temp->Cx=temp->Cx +x;
-		 temp->Cy=temp->Cy +y;
+		 temp->setAx(temp->getAx() + x);
+		 temp->setAy(temp->getAy() + y);
+		 temp->setCx(temp->getCx() + x);
+		 temp->setCy(temp->getCy() + y);
 		
 
 		 InvalidateRect(&r);
@@ -394,8 +394,8 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 		  //for square
 		  
-		  int minx=start.x+min( (end.x-start.x),(end.y-start.y) );
-		  int miny=start.y+ min( (end.x-start.x),(end.y-start.y) );
+		  int minx=start.x+min( abs(end.x-start.x),abs(end.y-start.y) );
+		  int miny=start.y+ min( abs(end.x-start.x),abs(end.y-start.y) );
 
 
 		  switch (typeShape)
@@ -518,7 +518,7 @@ void Cdraw33Dlg::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	 oldB=dc.SelectObject(&b);
 	 dc.Rectangle(5,400,55,450);
 	 dc.SelectObject(oldB);
-	 UpdateData(false);
+	 UpdateData(false);;
 	 //
 	*pResult = 0;
 }
