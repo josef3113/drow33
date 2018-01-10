@@ -394,8 +394,8 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 		  //for square
 		  
-		  int minx=start.x+min( abs(end.x-start.x),abs(end.y-start.y) );
-		  int miny=start.y+ min( abs(end.x-start.x),abs(end.y-start.y) );
+		  int minx=start.x+min( (end.x-start.x),(end.y-start.y) );
+		  int miny=start.y+ min( (end.x-start.x),(end.y-start.y) );
 
 
 		  switch (typeShape)
