@@ -17,7 +17,7 @@ private:
 public:
 	
 
-	MYLine(int Ax , int Ay,int Cx,int Cy,int R,int G,int B,int sizeLpen );  //difult constractor
+	MYLine(int Ax , int Ay,int Cx,int Cy,int R,int G,int B,int sizeLpen );
 	~MYLine();
 	MYLine(){}
 
@@ -29,18 +29,7 @@ public:
 	void setSizeLpen(int newSizeLpen) { this->sizeLpen = newSizeLpen; }
 	int getSizeLpen() { return this->sizeLpen; }
 
-	void Serialize (CArchive& ar)
-	{
-		MShape::Serialize (ar);
-		if (ar.IsStoring ())
-		{
-			ar << sizeLpen;
-		}
-		else
-		{
-			ar >> sizeLpen;
-		}
-	}
+	void Serialize (CArchive& ar) ;
 	
 
 

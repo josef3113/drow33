@@ -30,7 +30,7 @@ MYLine::~MYLine(void)
 
 
 
-//----function of MYEllipse
+//----function 
 
 
 void MYLine::Draw(CDC *dc)
@@ -38,4 +38,19 @@ void MYLine::Draw(CDC *dc)
 	dc->MoveTo(Ax,Ay);
 	dc->LineTo(Cx,Cy);
 }
+
+
+
+void MYLine:: Serialize (CArchive& ar)
+	{
+		MShape::Serialize (ar);
+		if (ar.IsStoring ())
+		{
+			ar << sizeLpen;
+		}
+		else
+		{
+			ar >> sizeLpen;
+		}
+	}
 

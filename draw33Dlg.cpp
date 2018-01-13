@@ -260,7 +260,7 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 					if(figs[i]->isinshap(point.x,point.y))
 					{
 						temp=figs[i];
-					//	temp->select();
+						//temp->select();
 					}
 				
 				}
@@ -401,7 +401,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		  switch (typeShape)
 		  {
 			 case 3:
-			figs.Add(new MYSquare(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
+			figs.Add(new MYRectangle(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
 			Invalidate();
 			 break;
 
@@ -712,7 +712,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton6()	// Save
 	// TODO: Add your control notification handler code here
 
 	TCHAR szFilters[] = _T("Project Files(*.$$)|*.$$|All Files (*.*)|(*.*)||");
-	CFileDialog fileDlg(FALSE,_T("$$"),_T("DRO.!!"),OFN_HIDEREADONLY, szFilters);
+	CFileDialog fileDlg(FALSE,_T("$$"),_T(".draw33"),OFN_HIDEREADONLY, szFilters);
 	if(fileDlg.DoModal() == IDOK)
 	{
 	CFile file(fileDlg.GetPathName(), CFile::modeCreate|CFile::modeWrite);
@@ -729,7 +729,7 @@ void Cdraw33Dlg::OnBnClickedMfcbutton7()   // Load
 {
 	// TODO: Add your control notification handler code here
 	TCHAR szFilters[] = _T("Project Files(*.$$)|*.$$|All Files (*.*)|(*.*)||");
-	CFileDialog fileDlg(FALSE,_T("$$"),_T("DRO.!!"),OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, szFilters);
+	CFileDialog fileDlg(FALSE,_T("$$"),_T(".draw33"),OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, szFilters);
 	if(fileDlg.DoModal() == IDOK)
 	{
 		CFile file(fileDlg.GetPathName(), CFile::modeRead);

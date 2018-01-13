@@ -25,40 +25,15 @@ protected:
 public:
 	MShape();
 	
-	virtual bool isinshap(int x,int y){return false;}
+	virtual bool isinshap(int x,int y);
 	virtual void select(){}
 	virtual void moved(){}
 	virtual void Draw(CDC *dc){}
 	virtual ~MShape(){}
 
-	void Serialize (CArchive& ar)
-	{
-		CObject::Serialize (ar);
-		if (ar.IsStoring ())
-		{
-			ar<<R;
-			ar<<G;
-			ar<<B;
+	void Serialize (CArchive& ar);
 
-			ar << Ax;
-			ar<<Ay ;
-			ar << Cx;
-			ar<< Cy;
-			//!!7 //ar << KIND;
-		}
-		else // Loading, not storing
-		{
-			ar>> R;
-			ar>> G;
-			ar>> B;
-			ar >> Ax;
-			ar>> Ay;
-			ar >> Cx;
-			ar>>Cy;
-			
-			//!!7 //ar >> KIND;
-		}
-	}
+
 	
 	virtual int getR() {return R;}
 	virtual int getG() { return G; }

@@ -19,7 +19,7 @@ public:
 	//----function of Rectangle
 
 	void Draw(CDC *dc);
-	bool isinshap(int x,int y) ;
+	//bool isinshap(int x,int y) ;
 	void select();
 	void moved();
 	
@@ -45,8 +45,8 @@ public:
 
 	//void Draw(CDC *dc);
 	//bool isinshap(int x,int y) ;
-	//void select();
-	//void moved();
+	void select();
+	void moved();
 	
      
 

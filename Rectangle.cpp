@@ -35,15 +35,15 @@ void MYRectangle::Draw(CDC *dc)
 	dc->Rectangle(this->Ax,this->Ay,this->Cx,this->Cy) ;
 }
 
-bool MYRectangle::isinshap(int x,int y)
-{
-	{
-		if( (x > this->Ax) && (x < this->Cx) && (y > this->Ay) && (y < this->Cy) )
-			return true;
-		else
-			return false;
-	}
-}
+//bool MYRectangle::isinshap(int x,int y)
+//{
+//	{
+//		if( (x > this->Ax) && (x < this->Cx) && (y > this->Ay) && (y < this->Cy) )
+//			return true;
+//		else
+//			return false;
+//	}
+//}
 
 void MYRectangle::select()
 {
@@ -62,15 +62,41 @@ void MYRectangle::moved()
 
 MYSquare::MYSquare(int Ax ,int Ay, int Cx,int Cy,int R,int G,int B )
 {
-	this->Ax=Ax;
-	this->Ay=Ay;
 
-	this->Cx=Cx;
-	this->Cy=Cy;
+	if(Ax-Cx ==Ay-Cy)
+	{
+		this->Ax=Ax;
+		this->Ay=Ay;
 
-	this->R=R;
-	this->G=G;
-	this->B=B;
+		this->Cx=Cx;
+		this->Cy=Cy;
+
+		this->R=R;
+		this->G=G;
+		this->B=B;
+	}
+	else
+	{
+		this->Ax=0;
+		this->Ay=0;
+
+		this->Cx=0;
+		this->Cy=0;
+
+		this->R=0;
+		this->G=0;
+		this->B=0;
+
+	}
 	
 
+}
+void MYSquare::select()
+{
+	PlaySound(TEXT("square_selected.wav"),NULL,SND_ASYNC|SND_FILENAME);
+}
+
+void MYSquare::moved()
+{
+	PlaySound(TEXT("square_moved.wav"),NULL,SND_ASYNC|SND_FILENAME);
 }
