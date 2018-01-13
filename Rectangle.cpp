@@ -35,15 +35,6 @@ void MYRectangle::Draw(CDC *dc)
 	dc->Rectangle(this->Ax,this->Ay,this->Cx,this->Cy) ;
 }
 
-//bool MYRectangle::isinshap(int x,int y)
-//{
-//	{
-//		if( (x > this->Ax) && (x < this->Cx) && (y > this->Ay) && (y < this->Cy) )
-//			return true;
-//		else
-//			return false;
-//	}
-//}
 
 void MYRectangle::select()
 {
@@ -58,7 +49,7 @@ void MYRectangle::moved()
 
 
 
-//////////////////////////////////////////
+////////////----square
 
 MYSquare::MYSquare(int Ax ,int Ay, int Cx,int Cy,int R,int G,int B )
 {

@@ -11,21 +11,23 @@ class MYRectangle :public MPolygon
 public:
 
 
-	MYRectangle(int Ax , int Ay,int Cx,int Cy,int R=0,int G=0,int B=0 ); //defult constractor
-	~MYRectangle();
+	MYRectangle(int Ax , int Ay,int Cx,int Cy,int R=0,int G=0,int B=0 ); 
 	MYRectangle(){}
+	~MYRectangle();
 
 	
 	//----function of Rectangle
 
 	void Draw(CDC *dc);
-	//bool isinshap(int x,int y) ;
 	void select();
 	void moved();
 	
      
 
 };
+
+
+///////////------square
 
 
 class MYSquare :public MYRectangle
@@ -36,15 +38,13 @@ class MYSquare :public MYRectangle
 public:
 
 
-	MYSquare(int Ax , int Ay,int Cx,int Cy,int R,int G,int B ); //defult constractor
+	MYSquare(int Ax , int Ay,int Cx,int Cy,int R,int G,int B );
 	~MYSquare(){}
 	MYSquare(){}
 
 	
 	//----function of Rectangle
 
-	//void Draw(CDC *dc);
-	//bool isinshap(int x,int y) ;
 	void select();
 	void moved();
 	

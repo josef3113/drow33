@@ -92,6 +92,13 @@ Cdraw33Dlg::~Cdraw33Dlg()
 		figs.RemoveAt(figs.GetSize()-1);
 	}
 
+	size=lines.GetSize();
+	for(int i=0;i<size;i++)
+	{
+		delete lines [lines.GetSize()-1];
+		lines.RemoveAt(lines.GetSize()-1);
+	}
+
 
 
 	//
@@ -278,7 +285,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	//my code 
 	 UpdateData(true);
-	 if(Ispress && ! ToMove  && !Line)
+	 if(Ispress && ! ToMove  && !Line)	//to creat shape
 	 {
 		CClientDC dc(this);
 		CPen myPen1(PS_SOLID, 5, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
@@ -299,7 +306,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 		dc.SelectObject( oldPen );
 	 }
-	 if(Ispress && ! ToMove  && Line)
+	 if(Ispress && ! ToMove  && Line)	// to creat line
 	 {
 		 CClientDC dc(this);
 		 CPen myPen1(PS_SOLID, 0.5*m_sizepen, RGB(2.5*m_red,2.5*m_green,2.5*m_blue));
@@ -316,7 +323,7 @@ void Cdraw33Dlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	 }
 
-	 if(temp!=NULL && Ispress && ToMove)
+	 if(temp!=NULL && Ispress && ToMove)	//to move shape
 	 {
 		int x,y;
 		int xx,yy;
@@ -360,7 +367,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 	UpdateData(true);
 	
 	
-     CClientDC dc(this);
+    CClientDC dc(this);
 	end=point;
 	Ispress=false;
 	if(!isin() && !Line  && !ToMove)	// you not in client surface so lines deleted and not make shape
@@ -401,9 +408,9 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 		  switch (typeShape)
 		  {
 			 case 3:
-			figs.Add(new MYRectangle(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
-			Invalidate();
-			 break;
+					figs.Add(new MYRectangle(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
+					Invalidate();
+					break;
 
 
 		   case 2: if(minx>5 && minx <995 && miny>5 && miny<395)
@@ -415,16 +422,16 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 		 
 		  case 1:
-			RECT r;
-			r.bottom=max(start.y,end.y)+50;
-			r.top=min(start.y,end.y)-50;
-			r.left=	min(start.x,end.x)-50;
-			r.right=max(start.x,end.x)+50;	
+					RECT r;
+					r.bottom=max(start.y,end.y)+50;
+					r.top=min(start.y,end.y)-50;
+					r.left=	min(start.x,end.x)-50;
+					r.right=max(start.x,end.x)+50;	
 
 
-			 figs.Add(new MYEllipse(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
-			 InvalidateRect(&r);
-			   break;
+					 figs.Add(new MYEllipse(start.x,start.y,end.x,end.y,m_red,m_green,m_blue));
+					 InvalidateRect(&r);
+					 break;
 
 		 
 		  }
@@ -490,6 +497,8 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	CDialogEx::OnLButtonUp(nFlags, point);
 }
+
+
 // mycode
 bool Cdraw33Dlg::isin()
 {

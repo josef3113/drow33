@@ -34,18 +34,6 @@ MYEllipse::~MYEllipse(void)
 
 
 
-//----function of MYEllipse
-
-//bool MYEllipse::isinshap(int x,int y)
-//{
-//	{
-//		if( (x > this->Ax) && (x < this->Cx) && (y > this->Ay) && (y < this->Cy) )
-//			return true;
-//		else
-//			return false;
-//	}
-//}
-
 void MYEllipse::Draw(CDC *dc)
 {
 	dc->Ellipse(Ax,Ay,Cx,Cy);

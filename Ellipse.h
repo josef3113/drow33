@@ -15,13 +15,12 @@ class MYEllipse :public MShape
 public:
 	
 
-	MYEllipse(int Ax , int Ay,int Cx,int Cy,int R=0,int G=0,int B=0 );  //difult constractor
-	~MYEllipse();
+	MYEllipse(int Ax , int Ay,int Cx,int Cy,int R,int G,int B );  
 	MYEllipse(){}
+	~MYEllipse();
 
 
 	void Draw(CDC *dc);
-	//bool isinshap(int x,int y);
 	 void select();
 	 void moved();
 

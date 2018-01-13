@@ -7,7 +7,7 @@ IMPLEMENT_SERIAL (MShape, CObject, 1)
 
 
 
-MShape::MShape(){}
+
 
 
 bool MShape ::isinshap(int x,int y)
@@ -32,20 +32,20 @@ void MShape :: Serialize (CArchive& ar)
 			ar<<B;
 
 			ar << Ax;
-			ar<<Ay ;
+			ar << Ay;
 			ar << Cx;
-			ar<< Cy;
+			ar << Cy;
 			
 		}
 		else // Loading, not storing
 		{
-			ar>> R;
-			ar>> G;
-			ar>> B;
+			ar >> R;
+			ar >> G;
+			ar >> B;
 			ar >> Ax;
-			ar>> Ay;
+			ar >> Ay;
 			ar >> Cx;
-			ar>>Cy;
+			ar >> Cy;
 			
 			
 		}
