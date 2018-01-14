@@ -1,4 +1,4 @@
-﻿Build started 1/13/2018 6:36:47 PM.
+﻿Build started 1/14/2018 11:20:10 AM.
      1>Project "C:\Users\josef\Documents\Visual Studio 2010\Projects\gg\draw33\draw33\draw33.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\draw33.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -8,7 +8,7 @@
          draw33Dlg.cpp
      1>c:\users\josef\documents\visual studio 2010\projects\gg\draw33\draw33\draw33dlg.cpp(231): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
      1>c:\users\josef\documents\visual studio 2010\projects\gg\draw33\draw33\draw33dlg.cpp(312): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\josef\documents\visual studio 2010\projects\gg\draw33\draw33\draw33dlg.cpp(674): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\josef\documents\visual studio 2010\projects\gg\draw33\draw33\draw33dlg.cpp(676): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
@@ -37,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.43
+Time Elapsed 00:00:03.94

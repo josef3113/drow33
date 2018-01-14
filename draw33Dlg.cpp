@@ -267,7 +267,7 @@ void Cdraw33Dlg::OnLButtonDown(UINT nFlags, CPoint point)
 					if(figs[i]->isinshap(point.x,point.y))
 					{
 						temp=figs[i];
-						//temp->select();
+						temp->select();
 					}
 				
 				}
@@ -488,7 +488,7 @@ void Cdraw33Dlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	if(ToMove && temp!=NULL)
 	{
-		//temp->moved();
+		temp->moved();
 		temp=NULL;
 	}
 	
